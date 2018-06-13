@@ -11,13 +11,62 @@
                     <Border Padding="7,7,7,5">
                         <Border 
                             x:Name="Border" 
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="1">
-                            <ContentPresenter/>
+                            Background="{TemplateBinding Background}">
+                            <DockPanel>
+                                <Grid 
+                                    Background="#05FFFFFF"
+                                    Height="32"
+                                    DockPanel.Dock="Top">
+                                    <Button
+                                        Style="{DynamicResource TransparentButtonStyle}"
+                                        Width="32" Height="32"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <Path
+                                            Fill="White"
+                                            Width="8" Height="8"
+                                            Data="{DynamicResource IconClose}"
+                                            Stretch="Fill"
+                                            RenderOptions.EdgeMode="Aliased"/>
+                                    </Button>
+                                    <Button
+                                        Style="{DynamicResource TransparentButtonStyle}"
+                                        Width="32" Height="32"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="0,0,32,0"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <Path
+                                            Fill="White"
+                                            Width="8" Height="8"
+                                            Data="{DynamicResource IconSquare}"
+                                            Stretch="Fill"
+                                            RenderOptions.EdgeMode="Aliased"/>
+                                    </Button>
+                                    <Button
+                                        Style="{DynamicResource TransparentButtonStyle}"
+                                        Width="32" Height="32"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="0,0,64,0"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <Path
+                                            Fill="White"
+                                            Width="8" Height="1"
+                                            Margin="0,2,0,0"
+                                            Data="{DynamicResource IconMinus}"
+                                            Stretch="Fill"
+                                            RenderOptions.EdgeMode="Aliased"/>
+                                    </Button>
+                                </Grid>
+                                <ContentPresenter/>
+                            </DockPanel>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Normal">
+                            <Setter TargetName="Border" Property="CornerRadius" Value="2"/>
                             <Setter TargetName="Border" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect
@@ -36,7 +85,7 @@
                 <WindowChrome
                     CaptionHeight="32"
                     CornerRadius="0"
-                    GlassFrameThickness="0,0,0,1"
+                    GlassFrameThickness="0"
                     NonClientFrameEdges="None"
                     ResizeBorderThickness="7"/>
             </Setter.Value>

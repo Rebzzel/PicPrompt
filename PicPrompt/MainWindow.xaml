@@ -9,8 +9,18 @@
         Width="800" Height="600"
         MinWidth="800" MinHeight="600"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow">
+        Title="PicPrompt">
     <Grid>
-        
+        <Button
+            Style="{StaticResource TransparentButtonStyle}"
+            Width="32" Height="32"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="0,-32,0,0"
+            WindowChrome.IsHitTestVisibleInChrome="True">
+            <Image
+                Width="16" Height="16"
+                Source="Resources/Images/icon.png"/>
+        </Button>
     </Grid>
 </Window>
