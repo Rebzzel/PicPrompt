@@ -21,6 +21,33 @@
                 Width="32" Height="32"
                 HorizontalAlignment="Left"
                 WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button.ContextMenu>
+                    <ContextMenu
+                        x:Name="Context">
+                        <MenuItem Header="Open"/>
+                        <MenuItem Header="Save As"/>
+                        <Separator/>
+                        <MenuItem Header="Options"/>
+                        <MenuItem Header="About"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames
+                                        Storyboard.TargetName="Context"
+                                        Storyboard.TargetProperty="IsOpen">
+                                        <DiscreteBooleanKeyFrame
+                                            KeyTime="0:0:0:0"
+                                            Value="True"/>
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </Button.Triggers>
                 <Image
                     Width="16" Height="16"
                     Source="Resources/Images/icon.png"/>
