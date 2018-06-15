@@ -29,8 +29,14 @@
                         <MenuItem Header="Open" InputGestureText="Ctrl+O"/>
                         <MenuItem Header="Save As" InputGestureText="Ctrl+S"/>
                         <Separator/>
+                        <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
+                        <MenuItem Header="Zoom Refresh" InputGestureText="Ctrl+0"/>
+                        <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
+                        <Separator/>
                         <MenuItem Header="Options"/>
                         <MenuItem Header="About"/>
+                        <Separator/>
+                        <MenuItem Header="Quit"/>
                     </ContextMenu>
                 </Button.ContextMenu>
                 <Button.Triggers>
