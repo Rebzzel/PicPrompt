@@ -18,30 +18,31 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             Margin="0,-32,0,0">
-            <Button
+            <StackPanel
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <Button
                 Style="{StaticResource TransparentButtonStyle}"
                 Width="32" Height="32"
-                HorizontalAlignment="Left"
                 WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button.ContextMenu>
-                    <ContextMenu
+                    <Button.ContextMenu>
+                        <ContextMenu
                         x:Name="Context">
-                        <MenuItem Header="Open" InputGestureText="Ctrl+O"/>
-                        <MenuItem Header="Save As" InputGestureText="Ctrl+S"/>
-                        <Separator/>
-                        <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
-                        <MenuItem Header="Zoom Refresh" InputGestureText="Ctrl+0"/>
-                        <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
-                        <Separator/>
-                        <MenuItem Header="Options"/>
-                        <MenuItem Header="About"/>
-                        <Separator/>
-                        <MenuItem Header="Quit"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-                <Button.Triggers>
-                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                        <EventTrigger.Actions>
+                            <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="OpenImage"/>
+                            <MenuItem Header="Save As" InputGestureText="Ctrl+S"/>
+                            <Separator/>
+                            <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
+                            <MenuItem Header="Zoom Refresh" InputGestureText="Ctrl+0"/>
+                            <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
+                            <Separator/>
+                            <MenuItem Header="Options"/>
+                            <MenuItem Header="About"/>
+                            <Separator/>
+                            <MenuItem Header="Quit"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="ButtonBase.Click">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <BooleanAnimationUsingKeyFrames
@@ -53,159 +54,179 @@
                                     </BooleanAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </Button.Triggers>
-                <Image
+                        </EventTrigger>
+                    </Button.Triggers>
+                    <Image
                     Width="16" Height="16"
                     Source="Resources/Images/icon.png"/>
-            </Button>
-            <Label
-                Foreground="#3F808080"
-                HorizontalAlignment="Left"
-                Margin="32,0,0,0"
-                Padding="5,7,5,5"
-                Content="|"/>
-            <Label
-                Foreground="Gray"
-                HorizontalAlignment="Left"
-                Margin="46,0,0,0"
-                Padding="5,7,5,5"
-                FontFamily="Segoe UI Semibold"
-                FontSize="13"
-                Content="PicPrompt"/>
-            <Button
-                x:Name="Close"
-                Style="{StaticResource TransparentButtonStyle}"
-                Width="32" Height="32"
+                </Button>
+                <Label
+                    x:Name="Separator1"
+                    Foreground="#3F808080"
+                    Padding="5,7,5,5"
+                    Content="|"/>
+                <Label
+                    Foreground="Gray"
+                    Padding="5,7,5,5"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="PicPrompt"/>
+                <Label
+                    x:Name="Separator2"
+                    Foreground="#3F808080"
+                    Padding="5,7,5,5"
+                    Content="|"
+                    Visibility="Collapsed"/>
+                <Label
+                    x:Name="NameLbl"
+                    Foreground="Gray"
+                    Padding="5,7,5,5"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Visibility="Collapsed"/>
+                <Label
+                    x:Name="Separator3"
+                    Foreground="#3F808080"
+                    Padding="5,7,5,5"
+                    Content="|"
+                    Visibility="Collapsed"/>
+                <Label
+                    x:Name="SizeLbl"
+                    Foreground="Gray"
+                    Padding="5,7,5,5"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Visibility="Collapsed"/>
+            </StackPanel>
+            <StackPanel
                 HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                WindowChrome.IsHitTestVisibleInChrome="True" 
-                Click="Close_Click">
-                <Path
-                    Fill="White"
-                    Width="8" Height="8"
-                    Data="{StaticResource IconClose}"
-                    Stretch="Fill"
-                    RenderOptions.EdgeMode="Aliased"/>
-            </Button>
-            <Button
-                x:Name="MaximizeOrRestore"
-                Style="{StaticResource TransparentButtonStyle}"
-                Width="32" Height="32"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Margin="0,0,32,0"
-                WindowChrome.IsHitTestVisibleInChrome="True" 
-                Click="MaximizeOrRestore_Click">
-                <Path
-                    Fill="White"
-                    Width="8" Height="8"
-                    Data="{StaticResource IconSquare}"
-                    Stretch="Fill"
-                    RenderOptions.EdgeMode="Aliased"/>
-            </Button>
-            <Button
-                x:Name="Minimize"
-                Style="{StaticResource TransparentButtonStyle}"
-                Width="32" Height="32"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Margin="0,0,64,0"
-                WindowChrome.IsHitTestVisibleInChrome="True" 
-                Click="Minimize_Click">
-                <Path
-                    Fill="White"
-                    Width="8" Height="1"
-                    Margin="0,2,0,0"
-                    Data="{StaticResource IconMinus}"
-                    Stretch="Fill"
-                    RenderOptions.EdgeMode="Aliased"/>
-            </Button>
+                Orientation="Horizontal">
+                <Button
+                    x:Name="Minimize"
+                    Style="{StaticResource TransparentButtonStyle}"
+                    Width="32" Height="32"
+                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                    Click="Minimize_Click">
+                    <Path
+                        Fill="White"
+                        Width="8" Height="1"
+                        Margin="0,2,0,0"
+                        Data="{StaticResource IconMinus}"
+                        Stretch="Fill"
+                        RenderOptions.EdgeMode="Aliased"/>
+                </Button>
+                <Button
+                    x:Name="MaximizeOrRestore"
+                    Style="{StaticResource TransparentButtonStyle}"
+                    Width="32" Height="32"
+                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                    Click="MaximizeOrRestore_Click">
+                    <Path
+                        Fill="White"
+                        Width="8" Height="8"
+                        Data="{StaticResource IconSquare}"
+                        Stretch="Fill"
+                        RenderOptions.EdgeMode="Aliased"/>
+                </Button>
+                <Button
+                    x:Name="Close"
+                    Style="{StaticResource TransparentButtonStyle}"
+                    Width="32" Height="32"
+                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                    Click="Close_Click">
+                    <Path
+                        Fill="White"
+                        Width="8" Height="8"
+                        Data="{StaticResource IconClose}"
+                        Stretch="Fill"
+                        RenderOptions.EdgeMode="Aliased"/>
+                </Button>
+            </StackPanel>
         </Grid>
         <Image
             x:Name="Viewer"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"/>
         <Grid
+            x:Name="NoneContentGrid"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
-            <Image
-                Width="98" Height="98"
-                Margin="0,0,0,100"
-                Source="Resources/Images/drag-and-drop.png"
-                RenderOptions.BitmapScalingMode="Fant"/>
-            <Label
-                Foreground="Gray"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom"
-                Margin="0,0,0,40"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Segoe UI Semibold"
-                FontSize="16"
-                Content="Drag &amp; Drop"/>
-            <Label
-                Foreground="#FF535353"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom"
-                Margin="0,0,0,20"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Segoe UI Semibold"
-                FontSize="16"
-                Content="or"/>
-            <c:ClickableLabel
-                Style="{StaticResource LabelButtonStyle}"
-                Foreground="Gray"
-                Width="50"  Height="32"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                FontFamily="Segoe UI Semibold"
-                FontSize="16"
-                Content="Open"/>
+            <StackPanel Orientation="Vertical">
+                <Image
+                    Width="98" Height="98"
+                    Margin="2.043,0"
+                    Source="Resources/Images/drag-and-drop.png"
+                    RenderOptions.BitmapScalingMode="Fant"/>
+                <Label
+                    Foreground="Gray"
+                    Height="32"
+                    Margin="0,20,0,0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="16"
+                    Content="Drag &amp; Drop"/>
+                <Label
+                    Foreground="#FF535353"
+                    Height="20"
+                    HorizontalContentAlignment="Center"
+                    Padding="0,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="16"
+                    Content="or" VerticalContentAlignment="Center"/>
+                <c:ClickableLabel
+                    Style="{StaticResource LabelButtonStyle}"
+                    Foreground="Gray"
+                    Width="50"  Height="32"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="16"
+                    Content="Open" 
+                    Click="OpenImage" Margin="26.043,0,26.044,0"/>
+            </StackPanel>
         </Grid>
         <Grid
             x:Name="Toolbar"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            Margin="0,30">
-            <Button
-                Style="{StaticResource RoundedTransparentButtonStyle}"
-                Width="40" Height="40"
-
-                Margin="0,0,85,0">
-                <Path
-                    Fill="#7FFFFFFF"
-                    Width="18" Height="18"
-                    Margin="0,2,0,0"
-                    Data="{StaticResource IconZoomIn}"
-                    Stretch="Fill"/>
-            </Button>
-            <Button
-                Style="{StaticResource RoundedTransparentButtonStyle}"
-                Width="40" Height="40"
-                Margin="42.5,0">
-                <Path
-                    Fill="#7FFFFFFF"
-                    Width="16" Height="16"
-                    Margin="0,2,0,0"
-                    Data="{StaticResource IconRefresh}"
-                    Stretch="Fill"/>
-            </Button>
-            <Button
-                Style="{StaticResource RoundedTransparentButtonStyle}"
-                Width="40" Height="40"
-                Margin="85,0,0,0">
-                <Path
-                    Fill="#7FFFFFFF"
-                    Width="18" Height="18"
-                    Margin="0,2,0,0"
-                    Data="{StaticResource IconZoomOut}"
-                    Stretch="Fill"/>
-            </Button>
+            Margin="0,30"
+            Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <Button
+                    x:Name="ZoomIn"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40"
+                    Margin="0,0,5,0">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="18" Height="18"
+                        Margin="0,2,0,0"
+                        Data="{StaticResource IconZoomIn}"
+                        Stretch="Fill"/>
+                </Button>
+                <Button
+                    x:Name="ZoomRefresh"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="16" Height="16"
+                        Margin="0,2,0,0"
+                        Data="{StaticResource IconRefresh}"
+                        Stretch="Fill"/>
+                </Button>
+                <Button
+                    x:Name="ZoomOut"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40"
+                    Margin="5,0,0,0">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="18" Height="18"
+                        Margin="0,2,0,0"
+                        Data="{StaticResource IconZoomOut}"
+                        Stretch="Fill"/>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
