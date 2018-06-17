@@ -29,11 +29,11 @@
                         <ContextMenu
                         x:Name="Context">
                             <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="OpenImage"/>
-                            <MenuItem Header="Save As" InputGestureText="Ctrl+S"/>
+                            <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S"/>
                             <Separator/>
-                            <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
-                            <MenuItem Header="Zoom Refresh" InputGestureText="Ctrl+0"/>
-                            <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
+                            <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++"/>
+                            <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0"/>
+                            <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-"/>
                             <Separator/>
                             <MenuItem Header="Options"/>
                             <MenuItem Header="About"/>
@@ -160,7 +160,7 @@
                 <Label
                     Foreground="Gray"
                     Height="32"
-                    Margin="0,20,0,0"
+                    Margin="0,40,0,0"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Segoe UI Semibold"
