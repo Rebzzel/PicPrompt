@@ -9,7 +9,10 @@ namespace PicPrompt
             InitializeComponent();
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e) => Close();
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
 
         private void MaximizeOrRestore_Click(object sender, RoutedEventArgs e)
         {
@@ -24,6 +27,9 @@ namespace PicPrompt
             }
         }
 
-        private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
     }
 }
