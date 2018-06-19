@@ -9,23 +9,33 @@ namespace PicPrompt
 {
     public partial class MainWindow : Window
     {
+        private System.Windows.Forms.NotifyIcon _notifyIcon;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
+            _notifyIcon.Text = "PicPrompt";
+            _notifyIcon.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Images/icon.ico")).Stream);
+            _notifyIcon.Click += (s, e) => Show();
+
+            var contextMenu = new System.Windows.Forms.ContextMenu();
+            contextMenu.MenuItems.Add("Quit", (s, e) => Quit_Click(null, null));
+
+            _notifyIcon.ContextMenu = contextMenu;
+            _notifyIcon.Visible = true;
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                OpenImage(files[0]);
-            }
+            string file = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            OpenImage(file);
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Hide();
         }
 
         private void MaximizeOrRestore_Click(object sender, RoutedEventArgs e)
@@ -54,10 +64,15 @@ namespace PicPrompt
                 OpenImage(dialog.FileName);
         }
 
+        private void Quit_Click(object sender, RoutedEventArgs e)
+        {
+            _notifyIcon.Dispose();
+
+            Environment.Exit(0);
+        }
+
         public void OpenImage(string path)
         {
-            Viewer.Source = null;
-
             using (MagickImage image = new MagickImage(path))
             {
                 var info = new FileInfo(path);

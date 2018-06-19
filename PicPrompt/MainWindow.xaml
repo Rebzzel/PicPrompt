@@ -40,7 +40,7 @@
                             <MenuItem Header="Options"/>
                             <MenuItem Header="About"/>
                             <Separator/>
-                            <MenuItem Header="Quit"/>
+                            <MenuItem Header="Quit" Click="Quit_Click"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                     <Button.Triggers>
@@ -172,7 +172,7 @@
                     Padding="0,0,0,0"
                     FontFamily="Segoe UI Semibold"
                     FontSize="16"
-                    Content="or" VerticalContentAlignment="Center"/>
+                    Content="or"/>
                 <c:ClickableLabel
                     Style="{StaticResource LabelButtonStyle}"
                     Foreground="Gray"
