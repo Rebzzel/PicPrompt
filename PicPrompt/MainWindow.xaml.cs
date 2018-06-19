@@ -14,6 +14,15 @@ namespace PicPrompt
             InitializeComponent();
         }
 
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                OpenImage(files[0]);
+            }
+        }
+
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
