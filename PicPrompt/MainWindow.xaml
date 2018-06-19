@@ -187,7 +187,7 @@
             x:Name="Toolbar"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            Margin="0,30"
+            Margin="0,30" 
             Visibility="Collapsed">
             <StackPanel Orientation="Horizontal">
                 <Button
@@ -223,6 +223,36 @@
                         Width="18" Height="18"
                         Margin="0,2,0,0"
                         Data="{StaticResource IconZoomOut}"
+                        Stretch="Fill"/>
+                </Button>
+                <Label
+                    x:Name="Separator4"
+                    Foreground="Gray"
+                    Width="11.8"
+                    Margin="5,0,0,0"
+                    Padding="5,7,5,5"
+                    FontSize="16"
+                    Content="|"/>
+                <Button
+                    x:Name="RotateRight"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40"
+                    Margin="5,0,0,0">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="17" Height="19"
+                        Data="{StaticResource IconRotateRight}"
+                        Stretch="Fill"/>
+                </Button>
+                <Button
+                    x:Name="RotateLeft"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40"
+                    Margin="5,0,0,0">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="17" Height="19"
+                        Data="{StaticResource IconRotateLeft}"
                         Stretch="Fill"/>
                 </Button>
             </StackPanel>
