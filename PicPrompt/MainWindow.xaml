@@ -28,7 +28,7 @@
                     <Button.ContextMenu>
                         <ContextMenu
                         x:Name="Context">
-                            <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="OpenImage"/>
+                            <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
                             <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S"/>
                             <Separator/>
                             <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++"/>
@@ -108,12 +108,11 @@
                     WindowChrome.IsHitTestVisibleInChrome="True" 
                     Click="Minimize_Click">
                     <Path
-                        Fill="White"
-                        Width="8" Height="1"
+                        Fill="#FFC5C5C5"
+                        Width="8" Height="2"
                         Margin="0,2,0,0"
                         Data="{StaticResource IconMinus}"
-                        Stretch="Fill"
-                        RenderOptions.EdgeMode="Aliased"/>
+                        Stretch="Fill"/>
                 </Button>
                 <Button
                     x:Name="MaximizeOrRestore"
@@ -123,10 +122,9 @@
                     Click="MaximizeOrRestore_Click">
                     <Path
                         Fill="White"
-                        Width="8" Height="8"
+                        Width="9" Height="9"
                         Data="{StaticResource IconSquare}"
-                        Stretch="Fill"
-                        RenderOptions.EdgeMode="Aliased"/>
+                        Stretch="Fill"/>
                 </Button>
                 <Button
                     x:Name="Close"
@@ -135,11 +133,10 @@
                     WindowChrome.IsHitTestVisibleInChrome="True" 
                     Click="Close_Click">
                     <Path
-                        Fill="White"
-                        Width="8" Height="8"
+                        Fill="#FFC5C5C5"
+                        Width="9" Height="9"
                         Data="{StaticResource IconClose}"
-                        Stretch="Fill"
-                        RenderOptions.EdgeMode="Aliased"/>
+                        Stretch="Fill"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -177,11 +174,11 @@
                 <c:ClickableLabel
                     Style="{StaticResource LabelButtonStyle}"
                     Foreground="Gray"
-                    Width="50"  Height="32"
+                    Width="50" Height="32"
                     FontFamily="Segoe UI Semibold"
                     FontSize="16"
                     Content="Open" 
-                    Click="OpenImage" Margin="26.043,0,26.044,0"/>
+                    Click="Open_Click"/>
             </StackPanel>
         </Grid>
         <Grid

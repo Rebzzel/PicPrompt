@@ -23,7 +23,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Normal">
-                            <Setter TargetName="Border" Property="CornerRadius" Value="2"/>
+                            <Setter TargetName="Border" Property="CornerRadius" Value="5"/>
                             <Setter TargetName="Border" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect

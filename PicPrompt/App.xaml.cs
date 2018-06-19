@@ -14,7 +14,13 @@ namespace PicPrompt
             {
                 App app = new App();
                 app.InitializeComponent();
-                app.Run(new MainWindow());
+                app.MainWindow = new MainWindow();
+
+                var args = SingleInstance<App>.CommandLineArgs;
+                if (args.Count > 1)
+                    ((MainWindow)app.MainWindow).OpenImage(args[1]);
+
+                app.Run(app.MainWindow);
 
                 SingleInstance<App>.Cleanup();
             }
@@ -22,6 +28,14 @@ namespace PicPrompt
 
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
+            var mainWindow = (MainWindow)this.MainWindow;
+
+            if (args.Count > 1)
+                mainWindow.OpenImage(args[1]);
+
+            if (!mainWindow.IsActive)
+                mainWindow.Show();
+
             return true;
         }
     }
