@@ -12,7 +12,8 @@
         Title="PicPrompt" 
         WindowStartupLocation="CenterScreen"
         AllowDrop="True"
-        Drop="Window_Drop">
+        Drop="Window_Drop" 
+        Closing="Window_Closing">
     <Grid>
         <Grid
             x:Name="TitleBar"
@@ -29,7 +30,7 @@
                 WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.ContextMenu>
                         <ContextMenu
-                        x:Name="Context">
+                            x:Name="Context">
                             <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
                             <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S"/>
                             <Separator/>
@@ -94,6 +95,19 @@
                     Visibility="Collapsed"/>
                 <Label
                     x:Name="SizeLbl"
+                    Foreground="Gray"
+                    Padding="5,7,5,5"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Visibility="Collapsed"/>
+                <Label
+                    x:Name="Separator4"
+                    Foreground="#3F808080"
+                    Padding="5,7,5,5"
+                    Content="|"
+                    Visibility="Collapsed"/>
+                <Label
+                    x:Name="ScaleLbl"
                     Foreground="Gray"
                     Padding="5,7,5,5"
                     FontFamily="Segoe UI Semibold"
@@ -226,7 +240,7 @@
                         Stretch="Fill"/>
                 </Button>
                 <Label
-                    x:Name="Separator4"
+                    x:Name="Separator5"
                     Foreground="Gray"
                     Width="11.8"
                     Margin="5,0,0,0"

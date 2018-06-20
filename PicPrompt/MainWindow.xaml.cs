@@ -10,6 +10,8 @@ namespace PicPrompt
     public partial class MainWindow : Window
     {
         private System.Windows.Forms.NotifyIcon _notifyIcon;
+        private MagickImageInfo _currentImageInfo;
+        private int _imageScale;
 
         public MainWindow()
         {
@@ -25,6 +27,11 @@ namespace PicPrompt
 
             _notifyIcon.ContextMenu = contextMenu;
             _notifyIcon.Visible = true;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _notifyIcon.Dispose();
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
@@ -66,7 +73,7 @@ namespace PicPrompt
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-            _notifyIcon.Dispose();
+           _notifyIcon.Dispose();
 
             Environment.Exit(0);
         }
@@ -77,18 +84,36 @@ namespace PicPrompt
             {
                 var info = new FileInfo(path);
 
+                _currentImageInfo = new MagickImageInfo(info);
+
                 Separator2.Visibility = Visibility.Visible;
                 NameLbl.Visibility = Visibility.Visible;
                 NameLbl.Content = $"{info.Name}";
                 Separator3.Visibility = Visibility.Visible;
                 SizeLbl.Visibility = Visibility.Visible;
                 SizeLbl.Content = $"{image.Width} x {image.Height}";
+                Separator4.Visibility = Visibility.Visible;
+                ScaleLbl.Visibility = Visibility.Visible;
 
                 NoneContentGrid.Visibility = Visibility.Collapsed;
 
-                Viewer.Width = image.Width;
-                Viewer.Height = image.Height;
+                var scale_width = image.Width;
+                var scale_height = image.Height;
+
+                _imageScale = 100;
+
+                while (scale_width > Width * 80 / 100 || scale_height > Height * 80 / 100)
+                {
+                    scale_width -= image.Width * 10 / 100;
+                    scale_height -= image.Height * 10 / 100;
+                    _imageScale -= 10;
+                }
+
+                ScaleLbl.Content = $"{_imageScale}%";
+
                 Viewer.Source = image.ToBitmapSource();
+                Viewer.BeginAnimation(WidthProperty, new DoubleAnimation(0, scale_width, new TimeSpan(0, 0, 0, 0, 500)));
+                Viewer.BeginAnimation(HeightProperty, new DoubleAnimation(0, scale_height, new TimeSpan(0, 0, 0, 0, 500)));
 
                 if (Toolbar.Visibility == Visibility.Collapsed)
                 {
