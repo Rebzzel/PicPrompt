@@ -10,7 +10,7 @@ namespace PicPrompt
     public partial class MainWindow : Window
     {
         private System.Windows.Forms.NotifyIcon _notifyIcon;
-        private MagickImageInfo _currentImageInfo;
+        private MagickImage _image;
         private int _imageScale;
 
         public MainWindow()
@@ -31,12 +31,14 @@ namespace PicPrompt
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            _image.Dispose();
             _notifyIcon.Dispose();
         }
 
         private void Window_Drop(object sender, DragEventArgs e)
         {
             string file = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+
             OpenImage(file);
         }
 
@@ -73,55 +75,71 @@ namespace PicPrompt
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-           _notifyIcon.Dispose();
+            _image.Dispose();
+            _notifyIcon.Dispose();
 
             Environment.Exit(0);
         }
 
+        private void RotateRight_Click(object sender, RoutedEventArgs e)
+        {
+            _image.Rotate(90);
+
+            Viewer.Source = _image.ToBitmapSource();
+        }
+
+        private void RotateLeft_Click(object sender, RoutedEventArgs e)
+        {
+            _image.Rotate(-90);
+
+            Viewer.Source = _image.ToBitmapSource();
+        }
+
         public void OpenImage(string path)
         {
-            using (MagickImage image = new MagickImage(path))
+            if (_image != null)
+                _image.Dispose();
+
+            _image = new MagickImage(path);
+
+            var info = new FileInfo(path);
+
+            Separator2.Visibility = Visibility.Visible;
+            NameLbl.Visibility = Visibility.Visible;
+            NameLbl.Content = $"{info.Name}";
+            Separator3.Visibility = Visibility.Visible;
+            SizeLbl.Visibility = Visibility.Visible;
+            SizeLbl.Content = $"{_image.Width} x {_image.Height}";
+            Separator4.Visibility = Visibility.Visible;
+            ScaleLbl.Visibility = Visibility.Visible;
+
+            NoneContentGrid.Visibility = Visibility.Collapsed;
+
+            var scale_width = _image.Width;
+            var scale_height = _image.Height;
+
+            _imageScale = 100;
+
+            while (scale_width > Width * 80 / 100 || scale_height > Height * 80 / 100)
             {
-                var info = new FileInfo(path);
+                scale_width -= _image.Width * 10 / 100;
+                scale_height -= _image.Height * 10 / 100;
+                _imageScale -= 10;
+            }
 
-                _currentImageInfo = new MagickImageInfo(info);
+            ScaleLbl.Content = $"{_imageScale}%";
 
-                Separator2.Visibility = Visibility.Visible;
-                NameLbl.Visibility = Visibility.Visible;
-                NameLbl.Content = $"{info.Name}";
-                Separator3.Visibility = Visibility.Visible;
-                SizeLbl.Visibility = Visibility.Visible;
-                SizeLbl.Content = $"{image.Width} x {image.Height}";
-                Separator4.Visibility = Visibility.Visible;
-                ScaleLbl.Visibility = Visibility.Visible;
+            Viewer.Source = _image.ToBitmapSource();
+            Viewer.BeginAnimation(WidthProperty, new DoubleAnimation(0, scale_width, new TimeSpan(0, 0, 0, 0, 500)));
+            Viewer.BeginAnimation(HeightProperty, new DoubleAnimation(0, scale_height, new TimeSpan(0, 0, 0, 0, 500)));
 
-                NoneContentGrid.Visibility = Visibility.Collapsed;
-
-                var scale_width = image.Width;
-                var scale_height = image.Height;
-
-                _imageScale = 100;
-
-                while (scale_width > Width * 80 / 100 || scale_height > Height * 80 / 100)
-                {
-                    scale_width -= image.Width * 10 / 100;
-                    scale_height -= image.Height * 10 / 100;
-                    _imageScale -= 10;
-                }
-
-                ScaleLbl.Content = $"{_imageScale}%";
-
-                Viewer.Source = image.ToBitmapSource();
-                Viewer.BeginAnimation(WidthProperty, new DoubleAnimation(0, scale_width, new TimeSpan(0, 0, 0, 0, 500)));
-                Viewer.BeginAnimation(HeightProperty, new DoubleAnimation(0, scale_height, new TimeSpan(0, 0, 0, 0, 500)));
-
-                if (Toolbar.Visibility == Visibility.Collapsed)
-                {
-                    Toolbar.Visibility = Visibility.Visible;
-                    Toolbar.BeginAnimation(MarginProperty, new ThicknessAnimation(new Thickness(0, 0, 0, 0), new Thickness(0, 0, 0, 30), new TimeSpan(0, 0, 0, 0, 700)));
-                    Toolbar.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, new TimeSpan(0, 0, 1)));
-                }
+            if (Toolbar.Visibility == Visibility.Collapsed)
+            {
+                Toolbar.Visibility = Visibility.Visible;
+                Toolbar.BeginAnimation(MarginProperty, new ThicknessAnimation(new Thickness(0, 0, 0, 0), new Thickness(0, 0, 0, 30), new TimeSpan(0, 0, 0, 0, 700)));
+                Toolbar.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, new TimeSpan(0, 0, 1)));
             }
         }
+
     }
 }

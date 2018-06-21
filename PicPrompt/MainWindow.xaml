@@ -38,6 +38,9 @@
                             <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0"/>
                             <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-"/>
                             <Separator/>
+                            <MenuItem Header="Rotate Right" IsEnabled="False" InputGestureText="Ctrl+A" Click="RotateRight_Click"/>
+                            <MenuItem Header="Rotate Left" IsEnabled="False" InputGestureText="Ctrl+D" Click="RotateLeft_Click"/>
+                            <Separator/>
                             <MenuItem Header="Options"/>
                             <MenuItem Header="About"/>
                             <Separator/>
@@ -251,7 +254,8 @@
                     x:Name="RotateRight"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
                     Width="40" Height="40"
-                    Margin="5,0,0,0">
+                    Margin="5,0,0,0" 
+                    Click="RotateRight_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="17" Height="19"
@@ -262,7 +266,8 @@
                     x:Name="RotateLeft"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
                     Width="40" Height="40"
-                    Margin="5,0,0,0">
+                    Margin="5,0,0,0" 
+                    Click="RotateLeft_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="17" Height="19"
