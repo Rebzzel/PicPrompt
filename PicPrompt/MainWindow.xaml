@@ -9,11 +9,13 @@
         Style="{StaticResource NativeWindowStyle}"
         Width="800" Height="600"
         MinWidth="800" MinHeight="600"
-        Title="PicPrompt" 
+        Title="{Binding ElementName=NameLbl, Path=Content}" 
         WindowStartupLocation="CenterScreen"
         AllowDrop="True"
         Drop="Window_Drop" 
-        Closing="Window_Closing">
+        Closing="Window_Closing" 
+        MouseWheel="Window_MouseWheel" 
+        SizeChanged="Window_SizeChanged">
     <Grid>
         <Grid
             x:Name="TitleBar"
@@ -76,13 +78,13 @@
                     Padding="5,7,5,5"
                     FontFamily="Segoe UI Semibold"
                     FontSize="13"
-                    Content="PicPrompt"/>
+                    Content="PicPrompt (Beta)"/>
                 <Label
                     x:Name="Separator2"
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
-                    Visibility="Collapsed"/>
+                    Visibility="{Binding ElementName=NameLbl, Path=Visibility}"/>
                 <Label
                     x:Name="NameLbl"
                     Foreground="Gray"
@@ -95,7 +97,7 @@
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
-                    Visibility="Collapsed"/>
+                    Visibility="{Binding ElementName=SizeLbl, Path=Visibility}"/>
                 <Label
                     x:Name="SizeLbl"
                     Foreground="Gray"
@@ -108,7 +110,7 @@
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
-                    Visibility="Collapsed"/>
+                    Visibility="{Binding ElementName=ScaleLbl, Path=Visibility}"/>
                 <Label
                     x:Name="ScaleLbl"
                     Foreground="Gray"
@@ -161,6 +163,7 @@
         </Grid>
         <Image
             x:Name="Viewer"
+            Width="0" Height="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"/>
         <Grid
@@ -211,7 +214,7 @@
                     x:Name="ZoomIn"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
                     Width="40" Height="40"
-                    Margin="0,0,5,0">
+                    Margin="0,0,5,0" Click="ZoomIn_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="18" Height="18"
@@ -222,7 +225,7 @@
                 <Button
                     x:Name="ZoomRefresh"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
-                    Width="40" Height="40">
+                    Width="40" Height="40" Click="ZoomRefresh_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="16" Height="16"
@@ -234,7 +237,7 @@
                     x:Name="ZoomOut"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
                     Width="40" Height="40"
-                    Margin="5,0,0,0">
+                    Margin="5,0,0,0" Click="ZoomOut_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="18" Height="18"
