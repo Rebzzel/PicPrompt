@@ -17,20 +17,21 @@ namespace PicPrompt.Utils
                 {
                     To = width,
                     Duration = TimeSpan.FromMilliseconds(delay),
-                    FillBehavior = FillBehavior.Stop
-                });            
+                });
 
                 obj.BeginAnimation(FrameworkElement.HeightProperty, new DoubleAnimation
                 {
                     To = width,
                     Duration = TimeSpan.FromMilliseconds(delay),
-                    FillBehavior = FillBehavior.Stop
                 });
 
                 await Task.Delay(delay);
 
                 obj.Width = width;
                 obj.Height = height;
+
+                obj.BeginAnimation(FrameworkElement.WidthProperty, null);
+                obj.BeginAnimation(FrameworkElement.HeightProperty, null);
 
                 return true;
             }
@@ -48,12 +49,13 @@ namespace PicPrompt.Utils
                 {
                     To = to,
                     Duration = TimeSpan.FromMilliseconds(delay),
-                    FillBehavior = FillBehavior.Stop
                 });
 
                 await Task.Delay(delay);
 
                 obj.Margin = to;
+
+                obj.BeginAnimation(FrameworkElement.MarginProperty, null);
 
                 return true;
             }
@@ -71,12 +73,13 @@ namespace PicPrompt.Utils
                 {
                     To = opacity,
                     Duration = TimeSpan.FromMilliseconds(delay),
-                    FillBehavior = FillBehavior.Stop
                 });
 
                 await Task.Delay(delay);
 
                 obj.Opacity = opacity;
+
+                obj.BeginAnimation(FrameworkElement.OpacityProperty, null);
 
                 if (opacity <= 0)
                     obj.Visibility = Visibility.Collapsed;
