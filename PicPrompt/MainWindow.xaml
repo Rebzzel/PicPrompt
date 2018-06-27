@@ -15,7 +15,8 @@
         Drop="Window_Drop" 
         Closing="Window_Closing" 
         MouseWheel="Window_MouseWheel" 
-        SizeChanged="Window_SizeChanged">
+        SizeChanged="Window_SizeChanged" 
+        KeyDown="Window_KeyDown">
     <Grid>
         <Grid
             x:Name="TitleBar"
@@ -36,9 +37,9 @@
                             <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
                             <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S"/>
                             <Separator/>
-                            <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++"/>
-                            <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0"/>
-                            <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-"/>
+                            <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
+                            <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="ZoomRefresh_Click"/>
+                            <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
                             <Separator/>
                             <MenuItem Header="Rotate Right" IsEnabled="False" InputGestureText="Ctrl+A" Click="RotateRight_Click"/>
                             <MenuItem Header="Rotate Left" IsEnabled="False" InputGestureText="Ctrl+D" Click="RotateLeft_Click"/>

@@ -1,11 +1,10 @@
 ﻿using ImageMagick;
 using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
+using System.Windows.Input;
 
 namespace PicPrompt
 {
@@ -98,6 +97,16 @@ namespace PicPrompt
             SizeLbl.Content = $"{_image.Width} x {_image.Height}";
             ScaleLbl.Visibility = Visibility.Visible;
 
+            for (int i = 0; i < Context.Items.Count; i++)
+            {
+                var item = Context.Items[i] as MenuItem;
+
+                if (item != null)
+                {
+                    item.IsEnabled = true;
+                }
+            }
+
             NoneContentGrid.Visibility = Visibility.Collapsed;
 
             Viewer.Source = _image.ToBitmapSource();
@@ -121,10 +130,15 @@ namespace PicPrompt
             if (_image == null)
                 return;
 
+            if (Viewer.Width + (_image.Width * delta / 100) < 0 || Viewer.Width + (_image.Height * delta / 100) < 0)
+                return;
+
             _imageIsZoomed = true;
             _imageScale += delta;
 
             ScaleLbl.Content = $"{_imageScale}%";
+
+            // TODO: Zoom to coordinates
 
             Viewer.Width += _image.Width * delta / 100;
             Viewer.Height += _image.Height * delta / 100;
@@ -132,7 +146,9 @@ namespace PicPrompt
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _image.Dispose();
+            if (_image != null)
+                _image.Dispose();
+
             _notifyIcon.Dispose();
         }
 
@@ -143,7 +159,34 @@ namespace PicPrompt
             OpenImage(filePath);
         }
 
-        private void Window_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Hide();
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.O)
+                Open_Click(null, null);
+
+            /*if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.S)
+                SaveAs_Click(null, null);*/
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
+                ZoomIn_Click(null, null);
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.D0)
+                ZoomRefresh_Click(null, null);
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
+                ZoomOut_Click(null, null);
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.A)
+                RotateLeft_Click(null, null);
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.D)
+                RotateRight_Click(null, null);
+        }
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point mousePos = e.GetPosition(this);
 
@@ -178,6 +221,7 @@ namespace PicPrompt
         {
             _imageIsZoomed = false;
 
+            Viewer.Margin = new Thickness(0, 0, 0, 0);
             ScaleImage(250);
         }
 
@@ -202,7 +246,9 @@ namespace PicPrompt
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-            _image.Dispose();
+            if (_image != null)
+                _image.Dispose();
+
             _notifyIcon.Dispose();
 
             Environment.Exit(0);
