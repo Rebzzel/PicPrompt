@@ -28,14 +28,14 @@
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
                 <Button
-                Style="{StaticResource TransparentButtonStyle}"
-                Width="32" Height="32"
-                WindowChrome.IsHitTestVisibleInChrome="True">
+                    Style="{StaticResource TransparentButtonStyle}"
+                    Width="32" Height="32"
+                    WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.ContextMenu>
                         <ContextMenu
                             x:Name="Context">
                             <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
-                            <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S"/>
+                            <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
                             <Separator/>
                             <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
                             <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="ZoomRefresh_Click"/>
@@ -210,6 +210,9 @@
             VerticalAlignment="Bottom"
             Margin="0,30" 
             Visibility="Collapsed">
+            <Border
+                Background="#3F131313"
+                CornerRadius="2"/>
             <StackPanel Orientation="Horizontal">
                 <Button
                     x:Name="ZoomIn"

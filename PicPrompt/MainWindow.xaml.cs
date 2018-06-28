@@ -167,8 +167,8 @@ namespace PicPrompt
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.O)
                 Open_Click(null, null);
 
-            /*if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.S)
-                SaveAs_Click(null, null);*/
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.S)
+                SaveAs_Click(null, null);
 
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
                 ZoomIn_Click(null, null);
@@ -212,13 +212,30 @@ namespace PicPrompt
                 OpenImage(dialog.FileName);
         }
 
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            if (_image == null)
+                return;
+
+            var dialog = new SaveFileDialog();
+
+            if (dialog.ShowDialog() is true)
+                _image.Write(dialog.FileName);
+        }
+
         private void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
+            if (_image == null)
+                return;
+
             Zoom(10, 0, 0);
         }
 
         private void ZoomRefresh_Click(object sender, RoutedEventArgs e)
         {
+            if (_image == null)
+                return;
+
             _imageIsZoomed = false;
 
             Viewer.Margin = new Thickness(0, 0, 0, 0);
@@ -227,11 +244,17 @@ namespace PicPrompt
 
         private void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
+            if (_image == null)
+                return;
+
             Zoom(-10, 0, 0);
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e)
         {
+            if (_image == null)
+                return;
+
             _image.Rotate(90);
 
             Viewer.Source = _image.ToBitmapSource();
@@ -239,6 +262,9 @@ namespace PicPrompt
 
         private void RotateLeft_Click(object sender, RoutedEventArgs e)
         {
+            if (_image == null)
+                return;
+
             _image.Rotate(-90);
 
             Viewer.Source = _image.ToBitmapSource();
