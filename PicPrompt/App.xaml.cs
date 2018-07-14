@@ -12,15 +12,16 @@ namespace PicPrompt
         {
             if (SingleInstance<App>.InitializeAsFirstInstance("PicPrompt"))
             {
-                App app = new App();
+                var app = new App();
                 app.InitializeComponent();
-                app.MainWindow = new MainWindow();
+
+                var mainWindow = new MainWindow();
 
                 var args = SingleInstance<App>.CommandLineArgs;
                 if (args.Count > 1)
-                    ((MainWindow)app.MainWindow).OpenImage(args[1]);
+                    mainWindow.OpenImage(args[1]);
 
-                app.Run(app.MainWindow);
+                app.Run(mainWindow);
 
                 SingleInstance<App>.Cleanup();
             }
@@ -28,13 +29,17 @@ namespace PicPrompt
 
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
-            var mainWindow = (MainWindow)this.MainWindow;
+            var mainWindow = MainWindow as MainWindow;
+
+            if (mainWindow == null)
+            {
+                mainWindow = new MainWindow();
+                mainWindow.Show();
+                MainWindow = mainWindow;
+            }
 
             if (args.Count > 1)
                 mainWindow.OpenImage(args[1]);
-
-            if (!mainWindow.IsActive)
-                mainWindow.Show();
 
             return true;
         }

@@ -9,11 +9,10 @@
         Style="{StaticResource NativeWindowStyle}"
         Width="800" Height="600"
         MinWidth="800" MinHeight="600"
-        Title="{Binding ElementName=NameLbl, Path=Content}" 
+        Title="PicPrompt (Beta)" 
         WindowStartupLocation="CenterScreen"
         AllowDrop="True"
         Drop="Window_Drop" 
-        Closing="Window_Closing" 
         MouseWheel="Window_MouseWheel" 
         SizeChanged="Window_SizeChanged" 
         KeyDown="Window_KeyDown">
@@ -73,7 +72,8 @@
                     x:Name="Separator1"
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
-                    Content="|"/>
+                    Content="|"
+                    TextOptions.TextFormattingMode="Display"/>
                 <Label
                     Foreground="Gray"
                     Padding="5,7,5,5"
@@ -85,6 +85,7 @@
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
+                    TextOptions.TextFormattingMode="Display"
                     Visibility="{Binding ElementName=NameLbl, Path=Visibility}"/>
                 <Label
                     x:Name="NameLbl"
@@ -98,6 +99,7 @@
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
+                    TextOptions.TextFormattingMode="Display"
                     Visibility="{Binding ElementName=SizeLbl, Path=Visibility}"/>
                 <Label
                     x:Name="SizeLbl"
@@ -111,6 +113,7 @@
                     Foreground="#3F808080"
                     Padding="5,7,5,5"
                     Content="|"
+                    TextOptions.TextFormattingMode="Display"
                     Visibility="{Binding ElementName=ScaleLbl, Path=Visibility}"/>
                 <Label
                     x:Name="ScaleLbl"
@@ -256,7 +259,8 @@
                     Margin="5,0,0,0"
                     Padding="5,7,5,5"
                     FontSize="16"
-                    Content="|"/>
+                    Content="|"
+                    TextOptions.TextFormattingMode="Display"/>
                 <Button
                     x:Name="RotateRight"
                     Style="{StaticResource RoundedTransparentButtonStyle}"

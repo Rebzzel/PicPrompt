@@ -1,6 +1,8 @@
 ﻿using ImageMagick;
+using LitJson;
 using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,25 +10,48 @@ using System.Windows.Input;
 
 namespace PicPrompt
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
-        private System.Windows.Forms.NotifyIcon _notifyIcon;
+        private static Window BackgroundWindow = new Window();
+
+        public JsonData Configuration;
 
         private MagickImage _image;
-
-        private int _imageScale;
-
-        private bool _imageIsZoomed;
 
         public MainWindow()
         {
             InitializeComponent();
-            InitializeNotifyIcon();
+            InitializeConfiguration();
+        }
+
+        public void Dispose()
+        {
+            if (_image != null)
+            {
+                _image.Dispose();
+                _image = null;
+            }
+        }
+
+        public void InitializeConfiguration()
+        {
+            if (!File.Exists("PicPrompt.json"))
+            {
+                File.WriteAllText("PicPrompt.json", 
+@"{
+    ""allow-background-work"": true
+}");
+            }
+
+            Configuration = JsonMapper.ToObject(File.ReadAllText("PicPrompt.json"));
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            if (!(bool)Configuration["allow-background-work"])
+                BackgroundWindow.Close();
+
+            Close();
         }
 
         private void MaximizeOrRestore_Click(object sender, RoutedEventArgs e)
@@ -47,111 +72,6 @@ namespace PicPrompt
             WindowState = WindowState.Minimized;
         }
 
-        private void InitializeNotifyIcon()
-        {
-            _notifyIcon = new System.Windows.Forms.NotifyIcon();
-            _notifyIcon.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Images/icon.ico")).Stream);
-            _notifyIcon.Text = "PicPrompt";
-
-            _notifyIcon.Click += (s, e) => Show();
-
-            var contextMenu = new System.Windows.Forms.ContextMenu();
-            contextMenu.MenuItems.Add("Quit", (s, e) => Quit_Click(null, null));
-
-            _notifyIcon.ContextMenu = contextMenu;
-            _notifyIcon.Visible = true;
-        }
-
-        public void ScaleImage(int animateDelay)
-        {
-            if (_image == null)
-                return;
-
-            _imageScale = 100;
-
-            var scale_width = _image.Width;
-            var scale_height = _image.Height;
-
-            while (scale_width > Width * 80 / 100 || scale_height > Height * 80 / 100)
-            {
-                scale_width -= _image.Width * 10 / 100;
-                scale_height -= _image.Height * 10 / 100;
-                _imageScale -= 10;
-            }
-
-            ScaleLbl.Content = $"{_imageScale}%";
-
-            Utils.Animator.Resize(Viewer, scale_width, scale_height, animateDelay);
-        }
-
-        public void OpenImage(string path)
-        {
-            if (_image != null)
-                _image.Dispose();
-
-            _image = new MagickImage(path);
-
-            NameLbl.Visibility = Visibility.Visible;
-            NameLbl.Content = _image.FileName.Split('\\')[Regex.Matches(_image.FileName, @"\\").Count];
-            SizeLbl.Visibility = Visibility.Visible;
-            SizeLbl.Content = $"{_image.Width} x {_image.Height}";
-            ScaleLbl.Visibility = Visibility.Visible;
-
-            for (int i = 0; i < Context.Items.Count; i++)
-            {
-                var item = Context.Items[i] as MenuItem;
-
-                if (item != null)
-                {
-                    item.IsEnabled = true;
-                }
-            }
-
-            NoneContentGrid.Visibility = Visibility.Collapsed;
-
-            Viewer.Source = _image.ToBitmapSource();
-            ScaleImage(500);
-
-            ScaleLbl.Content = $"{_imageScale}%";
-
-            if (Toolbar.Visibility == Visibility.Collapsed)
-            {
-                Toolbar.Margin = new Thickness(0, 0, 0, 0);
-                Toolbar.Opacity = 0;
-                Toolbar.Visibility = Visibility.Visible;
-
-                Utils.Animator.Move(Toolbar, new Thickness(0, 0, 0, 30), 500);
-                Utils.Animator.Opacity(Toolbar, 1, 1000);
-            }
-        }
-
-        private void Zoom(int delta, double x, double y)
-        {
-            if (_image == null)
-                return;
-
-            if (Viewer.Width + (_image.Width * delta / 100) < 0 || Viewer.Width + (_image.Height * delta / 100) < 0)
-                return;
-
-            _imageIsZoomed = true;
-            _imageScale += delta;
-
-            ScaleLbl.Content = $"{_imageScale}%";
-
-            // TODO: Zoom to coordinates
-
-            Viewer.Width += _image.Width * delta / 100;
-            Viewer.Height += _image.Height * delta / 100;
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (_image != null)
-                _image.Dispose();
-
-            _notifyIcon.Dispose();
-        }
-
         private void Window_Drop(object sender, DragEventArgs e)
         {
             var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
@@ -162,7 +82,7 @@ namespace PicPrompt
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                Hide();
+                Close_Click(null, null);
 
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.O)
                 Open_Click(null, null);
@@ -188,66 +108,35 @@ namespace PicPrompt
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Point mousePos = e.GetPosition(this);
-
-            if (e.Delta > 0)
-                Zoom(10, mousePos.X, mousePos.Y);
-            else
-                Zoom(-10, mousePos.X, mousePos.Y);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_image == null || _imageIsZoomed)
-                return;
-
-            ScaleImage(250);
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
 
-            if (dialog.ShowDialog() is true)
+            if (dialog.ShowDialog() == true)
                 OpenImage(dialog.FileName);
         }
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
-
             var dialog = new SaveFileDialog();
-
-            if (dialog.ShowDialog() is true)
-                _image.Write(dialog.FileName);
         }
 
         private void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
-
-            Zoom(10, 0, 0);
         }
 
         private void ZoomRefresh_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
-
-            _imageIsZoomed = false;
-
-            Viewer.Margin = new Thickness(0, 0, 0, 0);
-            ScaleImage(250);
         }
 
         private void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
-
-            Zoom(-10, 0, 0);
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e)
@@ -272,12 +161,49 @@ namespace PicPrompt
 
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-            if (_image != null)
-                _image.Dispose();
-
-            _notifyIcon.Dispose();
-
             Environment.Exit(0);
+        }
+
+        public void OpenImage(string path)
+        {
+            Dispose();
+
+            _image = new MagickImage(path);
+
+            NoneContentGrid.Visibility = Visibility.Collapsed;
+
+            foreach (FrameworkElement item in ((StackPanel)TitleBar.Children[0]).Children)
+            {
+                item.Visibility = Visibility.Visible;
+            }
+
+            NameLbl.Content = _image.FileName.Split('\\')[Regex.Matches(_image.FileName, @"\\").Count];
+            SizeLbl.Content = $"{_image.Width} x {_image.Height}";
+
+            foreach (FrameworkElement item in Context.Items)
+            {
+                if ((item as MenuItem) != null)
+                    item.IsEnabled = true;
+            }
+
+            Viewer.Source = _image.ToBitmapSource();
+            Viewer.Width = _image.Width;
+            Viewer.Height = _image.Height;
+
+            if (Toolbar.Visibility == Visibility.Collapsed)
+            {
+                Toolbar.Margin = new Thickness(0, 0, 0, 0);
+                Toolbar.Opacity = 0;
+                Toolbar.Visibility = Visibility.Visible;
+
+                Utils.Animator.Move(Toolbar, new Thickness(0, 0, 0, 30), 500);
+                Utils.Animator.Opacity(Toolbar, 1, 1000);
+            }
+        }
+
+        public void Zoom(double ratio, double x, double y)
+        {
+
         }
     }
 }
