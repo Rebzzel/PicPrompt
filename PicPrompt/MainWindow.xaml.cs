@@ -1,7 +1,6 @@
 ﻿using ImageMagick;
 using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,26 +10,15 @@ namespace PicPrompt
 {
     public partial class MainWindow : Window, IDisposable
     {
-        private static Window BackgroundWindow = new Window();
-
-        public Utils.Configuration Configuration;
-
         private MagickImage _image;
 
         public MainWindow()
         {
             InitializeComponent();
-            InitializeConfiguration();
         }
 
         public void Dispose()
         {
-            if (Configuration != null)
-            {
-                Configuration.Dispose();
-                Configuration = null;
-            }
-
             if (_image != null)
             {
                 _image.Dispose();
@@ -38,24 +26,8 @@ namespace PicPrompt
             }
         }
 
-        public void InitializeConfiguration()
-        {
-            if (!File.Exists("PicPrompt.json"))
-            {
-                File.WriteAllText("PicPrompt.json", 
-@"{
-    ""allow-background-work"": true
-}");
-            }
-
-            Configuration = new Utils.Configuration("PicPrompt.json");
-        }
-
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            if (!(bool)Configuration["allow-background-work"])
-                BackgroundWindow.Close();
-
             Close();
         }
 
