@@ -40,7 +40,10 @@ namespace PicPrompt.Utils
         public void Dispose()
         {
             if (_watcher != null)
+            {
                 _watcher.Dispose();
+                _watcher = null;
+            }    
         }
 
         public JsonData this[int index]
