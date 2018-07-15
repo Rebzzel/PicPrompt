@@ -1,5 +1,4 @@
 ﻿using ImageMagick;
-using LitJson;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -14,7 +13,7 @@ namespace PicPrompt
     {
         private static Window BackgroundWindow = new Window();
 
-        public JsonData Configuration;
+        public Utils.Configuration Configuration;
 
         private MagickImage _image;
 
@@ -22,6 +21,8 @@ namespace PicPrompt
         {
             InitializeComponent();
             InitializeConfiguration();
+
+            
         }
 
         public void Dispose()
@@ -43,7 +44,7 @@ namespace PicPrompt
 }");
             }
 
-            Configuration = JsonMapper.ToObject(File.ReadAllText("PicPrompt.json"));
+            Configuration = new Utils.Configuration("PicPrompt.json");
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)

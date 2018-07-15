@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Resources\Controls\ClickableLabel.cs" />
     <Compile Include="Utils\Animator.cs" />
+    <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\SingleInstance.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
