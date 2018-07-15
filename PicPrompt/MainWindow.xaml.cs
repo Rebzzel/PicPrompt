@@ -21,12 +21,16 @@ namespace PicPrompt
         {
             InitializeComponent();
             InitializeConfiguration();
-
-            
         }
 
         public void Dispose()
         {
+            if (Configuration != null)
+            {
+                Configuration.Dispose();
+                Configuration = null;
+            }
+
             if (_image != null)
             {
                 _image.Dispose();
@@ -167,7 +171,11 @@ namespace PicPrompt
 
         public void OpenImage(string path)
         {
-            Dispose();
+            if (_image != null)
+            {
+                _image.Dispose();
+                _image = null;
+            }
 
             _image = new MagickImage(path);
 

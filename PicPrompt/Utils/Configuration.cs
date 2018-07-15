@@ -1,13 +1,14 @@
 ﻿using LitJson;
 using System;
 using System.IO;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace PicPrompt.Utils
 {
-    public class Configuration
+    public class Configuration : IDisposable
     {
         private JsonData _data;
+        private FileSystemWatcher _watcher;
 
         public Configuration(string path)
         {
@@ -18,7 +19,28 @@ namespace PicPrompt.Utils
 
             _data = JsonMapper.ToObject(File.ReadAllText(info.FullName));
 
-            // TODO: reload data when file changes
+            _watcher = new FileSystemWatcher(info.DirectoryName, info.Name)
+            {
+                NotifyFilter = NotifyFilters.LastWrite,
+                EnableRaisingEvents = true
+            };
+
+            _watcher.Changed += (_, __) =>
+            {
+                // Without this, we get IOException :P
+                new Task(async () => 
+                {
+                    await Task.Delay(100);
+
+                    _data = JsonMapper.ToObject(File.ReadAllText(info.FullName));
+                }).Start();
+            };
+        }
+
+        public void Dispose()
+        {
+            if (_watcher != null)
+                _watcher.Dispose();
         }
 
         public JsonData this[int index]
