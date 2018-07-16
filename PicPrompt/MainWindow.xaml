@@ -28,10 +28,10 @@
                 Orientation="Horizontal">
                 <Button
                     Style="{StaticResource TransparentButtonStyle}"
-                    Width="32" Height="32"
+                    Width="34" Height="32"
                     WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.ContextMenu>
-                        <ContextMenu
+                        <ContextMenu 
                             x:Name="Context">
                             <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
                             <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
