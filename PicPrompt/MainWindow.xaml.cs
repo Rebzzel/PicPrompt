@@ -161,7 +161,7 @@ namespace PicPrompt
             NameLbl.Content = _image.FileName.Split('\\')[Regex.Matches(_image.FileName, @"\\").Count];
             SizeLbl.Content = $"{_image.Width} x {_image.Height}";
 
-            foreach (FrameworkElement item in Context.Items)
+            foreach (FrameworkElement item in MainMenu.Items)
             {
                 if ((item as MenuItem) != null)
                     item.IsEnabled = true;

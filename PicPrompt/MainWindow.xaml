@@ -26,48 +26,32 @@
             <StackPanel
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
-                <Button
-                    Style="{StaticResource TransparentButtonStyle}"
-                    Width="34" Height="32"
+                <Menu 
+                    Background="Transparent" 
                     WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.ContextMenu>
-                        <ContextMenu 
-                            x:Name="Context">
-                            <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
-                            <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
-                            <Separator/>
-                            <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
-                            <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="ZoomRefresh_Click"/>
-                            <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
-                            <Separator/>
-                            <MenuItem Header="Rotate Right" IsEnabled="False" InputGestureText="Ctrl+A" Click="RotateRight_Click"/>
-                            <MenuItem Header="Rotate Left" IsEnabled="False" InputGestureText="Ctrl+D" Click="RotateLeft_Click"/>
-                            <Separator/>
-                            <MenuItem Header="Options"/>
-                            <MenuItem Header="About"/>
-                            <Separator/>
-                            <MenuItem Header="Quit" Click="Quit_Click"/>
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="ButtonBase.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <BooleanAnimationUsingKeyFrames
-                                        Storyboard.TargetName="Context"
-                                        Storyboard.TargetProperty="IsOpen">
-                                        <DiscreteBooleanKeyFrame
-                                            KeyTime="0:0:0:0"
-                                            Value="True"/>
-                                    </BooleanAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Image
-                    Width="16" Height="16"
-                    Source="Resources/Images/icon.png"/>
-                </Button>
+                    <MenuItem
+                        x:Name="MainMenu"
+                        Width="34" Height="32" 
+                        Padding="8,0,0,0">
+                        <MenuItem.Header>
+                            <Image Width="16" Height="16" Source="Resources/Images/icon.png"/>
+                        </MenuItem.Header>
+                        <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
+                        <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
+                        <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="ZoomRefresh_Click"/>
+                        <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Rotate Right" IsEnabled="False" InputGestureText="Ctrl+A" Click="RotateRight_Click"/>
+                        <MenuItem Header="Rotate Left" IsEnabled="False" InputGestureText="Ctrl+D" Click="RotateLeft_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Options"/>
+                        <MenuItem Header="About"/>
+                        <Separator/>
+                        <MenuItem Header="Quit" Click="Quit_Click"/>
+                    </MenuItem>
+                </Menu>
                 <Label
                     x:Name="Separator1"
                     Foreground="#3F808080"
