@@ -72,7 +72,7 @@ namespace PicPrompt
                 ZoomIn_Click(null, null);
 
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.D0)
-                ZoomRefresh_Click(null, null);
+                Refresh_Click(null, null);
 
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
                 ZoomOut_Click(null, null);
@@ -118,13 +118,6 @@ namespace PicPrompt
             ViewerGrid.Zoom(0.2);
         }
 
-        private void ZoomRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            _imageIsEdited = false;
-
-            ViewerGrid.Reset();
-        }
-
         private void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
             _imageIsEdited = true;
@@ -150,6 +143,13 @@ namespace PicPrompt
 
                 Viewer.Source = _image.ToBitmapSource();
             }
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            _imageIsEdited = false;
+
+            ViewerGrid.Reset();
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)

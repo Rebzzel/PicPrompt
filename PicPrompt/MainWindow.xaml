@@ -40,11 +40,12 @@
                         <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
                         <Separator/>
                         <MenuItem Header="Zoom In" IsEnabled="False" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
-                        <MenuItem Header="Zoom Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="ZoomRefresh_Click"/>
                         <MenuItem Header="Zoom Out" IsEnabled="False" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
                         <Separator/>
                         <MenuItem Header="Rotate Right" IsEnabled="False" InputGestureText="Ctrl+A" Click="RotateRight_Click"/>
                         <MenuItem Header="Rotate Left" IsEnabled="False" InputGestureText="Ctrl+D" Click="RotateLeft_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="Refresh_Click"/>
                         <Separator/>
                         <MenuItem Header="Options"/>
                         <MenuItem Header="About"/>
@@ -215,17 +216,6 @@
                         Stretch="Fill"/>
                 </Button>
                 <Button
-                    x:Name="ZoomRefresh"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
-                    Width="40" Height="40" Click="ZoomRefresh_Click">
-                    <Path
-                        Fill="#7FFFFFFF"
-                        Width="16" Height="16"
-                        Margin="0,2,0,0"
-                        Data="{StaticResource IconRefresh}"
-                        Stretch="Fill"/>
-                </Button>
-                <Button
                     x:Name="ZoomOut"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
                     Width="40" Height="40"
@@ -268,6 +258,26 @@
                         Fill="#7FFFFFFF"
                         Width="17" Height="19"
                         Data="{StaticResource IconRotateLeft}"
+                        Stretch="Fill"/>
+                </Button>
+                <Label
+                    x:Name="Separator6"
+                    Foreground="Gray"
+                    Width="11.8"
+                    Margin="5,0,0,0"
+                    Padding="5,7,5,5"
+                    FontSize="16"
+                    Content="|"
+                    TextOptions.TextFormattingMode="Display"/>
+                <Button
+                    x:Name="Refresh"
+                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Width="40" Height="40" Click="Refresh_Click">
+                    <Path
+                        Fill="#7FFFFFFF"
+                        Width="16" Height="16"
+                        Margin="0,2,0,0"
+                        Data="{StaticResource IconRefresh}"
                         Stretch="Fill"/>
                 </Button>
             </StackPanel>
