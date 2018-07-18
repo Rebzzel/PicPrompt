@@ -91,11 +91,11 @@ namespace PicPrompt
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_image == null || _imageIsEdited)
-                return;
-
-            Viewer.Width = _image.Width > Width ? Width : _image.Width;
-            Viewer.Height = _image.Height > Height ? Height : _image.Height;
+            if (_image != null && !_imageIsEdited)
+            {
+                Viewer.Width = _image.Width > Width ? Width : _image.Width;
+                Viewer.Height = _image.Height > Height ? Height : _image.Height;
+            }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -134,22 +134,22 @@ namespace PicPrompt
 
         private void RotateRight_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
+            if (_image != null)
+            {
+                _image.Rotate(90);
 
-            _image.Rotate(90);
-
-            Viewer.Source = _image.ToBitmapSource();
+                Viewer.Source = _image.ToBitmapSource();
+            }
         }
 
         private void RotateLeft_Click(object sender, RoutedEventArgs e)
         {
-            if (_image == null)
-                return;
+            if (_image != null)
+            {
+                _image.Rotate(-90);
 
-            _image.Rotate(-90);
-
-            Viewer.Source = _image.ToBitmapSource();
+                Viewer.Source = _image.ToBitmapSource();
+            }
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
@@ -189,18 +189,8 @@ namespace PicPrompt
             }
 
             Viewer.Source = _image.ToBitmapSource();
-            Viewer.Width = _image.Width;
-            Viewer.Height = _image.Height;
-
-            if (Viewer.Width > Width)
-            {
-                Viewer.Width = Width;
-            }
-
-            if (Viewer.Height > Height)
-            {
-                Viewer.Height = Height;
-            }
+            Viewer.Width = _image.Width > Width ? Width : _image.Width;
+            Viewer.Height = _image.Height > Height ? Height : _image.Height;
 
             if (Toolbar.Visibility == Visibility.Collapsed)
             {

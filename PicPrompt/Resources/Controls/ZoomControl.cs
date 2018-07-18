@@ -157,7 +157,7 @@ namespace PicPrompt.Resources.Controls
                 if ((scaleTransform.ScaleX + delta) < 0.2 || (scaleTransform.ScaleY + delta) < 0.2)
                     return;
 
-                _previous = new Point(position.X, position.Y);
+                _previous = position;
 
                 double absoluteX = position.X * scaleTransform.ScaleX + translateTransform.X;
                 double absoluteY = position.Y * scaleTransform.ScaleY + translateTransform.Y;
