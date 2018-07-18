@@ -149,11 +149,12 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Image
-            x:Name="Viewer"
-            Width="0" Height="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"/>
+        <c:ZoomControl x:Name="ViewerGrid" ClipToBounds="True" EnableZoom="True" EnablePan="True">
+            <Image 
+                x:Name="Viewer" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"/>
+        </c:ZoomControl>
         <Grid
             x:Name="NoneContentGrid"
             HorizontalAlignment="Center"

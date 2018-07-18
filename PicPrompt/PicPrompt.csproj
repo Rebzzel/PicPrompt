@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Controls\ClickableLabel.cs" />
+    <Compile Include="Resources\Controls\ZoomControl.cs" />
     <Compile Include="Utils\Animator.cs" />
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\SingleInstance.cs" />

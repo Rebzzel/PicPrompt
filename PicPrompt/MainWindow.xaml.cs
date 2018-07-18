@@ -11,6 +11,7 @@ namespace PicPrompt
     public partial class MainWindow : Window, IDisposable
     {
         private MagickImage _image;
+        private bool _imageIsEdited;
 
         public MainWindow()
         {
@@ -85,10 +86,16 @@ namespace PicPrompt
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            _imageIsEdited = true;
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (_image == null || _imageIsEdited)
+                return;
+
+            Viewer.Width = _image.Width > Width ? Width : _image.Width;
+            Viewer.Height = _image.Height > Height ? Height : _image.Height;
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -106,14 +113,23 @@ namespace PicPrompt
 
         private void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
+            _imageIsEdited = true;
+
+            ViewerGrid.Zoom(0.2);
         }
 
         private void ZoomRefresh_Click(object sender, RoutedEventArgs e)
         {
+            _imageIsEdited = false;
+
+            ViewerGrid.Reset();
         }
 
         private void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
+            _imageIsEdited = true;
+
+            ViewerGrid.Zoom(-0.2);
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e)
@@ -143,6 +159,8 @@ namespace PicPrompt
 
         public void OpenImage(string path)
         {
+            ViewerGrid.Reset();
+
             if (_image != null)
             {
                 _image.Dispose();
@@ -155,6 +173,9 @@ namespace PicPrompt
 
             foreach (FrameworkElement item in ((StackPanel)TitleBar.Children[0]).Children)
             {
+                if (item.Name == "Separator4" || item.Name == "ScaleLbl")
+                    continue;
+
                 item.Visibility = Visibility.Visible;
             }
 
@@ -171,6 +192,16 @@ namespace PicPrompt
             Viewer.Width = _image.Width;
             Viewer.Height = _image.Height;
 
+            if (Viewer.Width > Width)
+            {
+                Viewer.Width = Width;
+            }
+
+            if (Viewer.Height > Height)
+            {
+                Viewer.Height = Height;
+            }
+
             if (Toolbar.Visibility == Visibility.Collapsed)
             {
                 Toolbar.Margin = new Thickness(0, 0, 0, 0);
@@ -180,11 +211,6 @@ namespace PicPrompt
                 Utils.Animator.Move(Toolbar, new Thickness(0, 0, 0, 30), 500);
                 Utils.Animator.Opacity(Toolbar, 1, 1000);
             }
-        }
-
-        public void Zoom(double ratio, double x, double y)
-        {
-
         }
     }
 }
