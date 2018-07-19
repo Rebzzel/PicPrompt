@@ -13,8 +13,8 @@
                             x:Name="Border" 
                             Background="{TemplateBinding Background}">
                             <DockPanel>
-                                <Grid 
-                                    Background="#05FFFFFF"
+                                <Rectangle
+                                    Fill="#05FFFFFF"
                                     Height="32"
                                     DockPanel.Dock="Top"/>
                                 <ContentPresenter/>
