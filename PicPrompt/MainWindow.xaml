@@ -272,7 +272,9 @@
                 <Button
                     x:Name="Refresh"
                     Style="{StaticResource RoundedTransparentButtonStyle}"
-                    Width="40" Height="40" Click="Refresh_Click">
+                    Width="40" Height="40"
+                    Margin="5,0,0,0"
+                    Click="Refresh_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="16" Height="16"
