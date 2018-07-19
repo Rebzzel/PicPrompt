@@ -157,6 +157,16 @@ namespace PicPrompt
             Environment.Exit(0);
         }
 
+        private void Options_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("notepad.exe", $"{System.IO.Directory.GetCurrentDirectory()}\\PicPrompt.json");
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Rebzzel/PicPrompt");
+        }
+
         public void OpenImage(string path)
         {
             ViewerGrid.Reset();

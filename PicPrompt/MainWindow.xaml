@@ -47,8 +47,8 @@
                         <Separator/>
                         <MenuItem Header="Refresh" IsEnabled="False" InputGestureText="Ctrl+0" Click="Refresh_Click"/>
                         <Separator/>
-                        <MenuItem Header="Options"/>
-                        <MenuItem Header="About"/>
+                        <MenuItem Header="Options" Click="Options_Click"/>
+                        <MenuItem Header="About" Click="About_Click"/>
                         <Separator/>
                         <MenuItem Header="Quit" Click="Quit_Click"/>
                     </MenuItem>
