@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Border Padding="7,7,7,5">
                         <Border 
-                            x:Name="Border" 
+                            x:Name="Border"
                             Background="{TemplateBinding Background}">
                             <DockPanel>
                                 <Rectangle
