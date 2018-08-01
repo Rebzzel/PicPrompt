@@ -16,7 +16,7 @@
         MouseWheel="Window_MouseWheel" 
         SizeChanged="Window_SizeChanged" 
         KeyDown="Window_KeyDown">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid
             x:Name="TitleBar"
             Height="32"
@@ -151,8 +151,8 @@
             </StackPanel>
         </Grid>
         <c:ZoomControl x:Name="ViewerGrid" ClipToBounds="True" EnableZoom="True" EnablePan="True">
-            <Image 
-                x:Name="Viewer" 
+            <Image
+                x:Name="Viewer"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"/>
         </c:ZoomControl>

@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace PicPrompt
 {
@@ -160,6 +162,13 @@ namespace PicPrompt
         private void Options_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("notepad.exe", $"{System.IO.Directory.GetCurrentDirectory()}\\PicPrompt.json");
+
+            MainGrid.Children.Add(new Rectangle
+            {
+                Fill = new SolidColorBrush(Color.FromArgb(122, 13, 13, 13))
+            });
+
+            MainGrid.Children.Add(new Resources.Controls.Menu());
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
