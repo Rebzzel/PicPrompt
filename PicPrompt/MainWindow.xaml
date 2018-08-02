@@ -111,10 +111,14 @@
             <StackPanel
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <Button
+                <c:Button
                     x:Name="Minimize"
-                    Style="{StaticResource TransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="32" Height="32"
+                    BorderThickness="0"
+                    AnimationDelay="250"
                     WindowChrome.IsHitTestVisibleInChrome="True" 
                     Click="Minimize_Click">
                     <Path
@@ -123,11 +127,15 @@
                         Margin="0,2,0,0"
                         Data="{StaticResource IconMinus}"
                         Stretch="Fill"/>
-                </Button>
-                <Button
+                </c:Button>
+                <c:Button
                     x:Name="MaximizeOrRestore"
-                    Style="{StaticResource TransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="32" Height="32"
+                    BorderThickness="0"
+                    AnimationDelay="250"
                     WindowChrome.IsHitTestVisibleInChrome="True" 
                     Click="MaximizeOrRestore_Click">
                     <Path
@@ -135,19 +143,23 @@
                         Width="9" Height="9"
                         Data="{StaticResource IconSquare}"
                         Stretch="Fill"/>
-                </Button>
-                <Button
+                </c:Button>
+                <c:Button
                     x:Name="Close"
-                    Style="{StaticResource TransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="32" Height="32"
-                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                    BorderThickness="0"
+                    AnimationDelay="250"
+                    WindowChrome.IsHitTestVisibleInChrome="True"
                     Click="Close_Click">
                     <Path
                         Fill="#FFC5C5C5"
                         Width="9" Height="9"
                         Data="{StaticResource IconClose}"
                         Stretch="Fill"/>
-                </Button>
+                </c:Button>
             </StackPanel>
         </Grid>
         <c:ZoomControl x:Name="ViewerGrid" ClipToBounds="True" EnableZoom="True" EnablePan="True">
@@ -203,10 +215,15 @@
                 Background="#3F131313"
                 CornerRadius="2"/>
             <StackPanel Orientation="Horizontal">
-                <Button
+                <c:Button
                     x:Name="ZoomIn"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="40" Height="40"
+                    BorderThickness="0"
+                    CornerRadius="3"
+                    AnimationDelay="250"
                     Margin="0,0,5,0" Click="ZoomIn_Click">
                     <Path
                         Fill="#7FFFFFFF"
@@ -214,19 +231,25 @@
                         Margin="0,2,0,0"
                         Data="{StaticResource IconZoomIn}"
                         Stretch="Fill"/>
-                </Button>
-                <Button
+                </c:Button>
+                <c:Button
                     x:Name="ZoomOut"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="40" Height="40"
-                    Margin="5,0,0,0" Click="ZoomOut_Click">
+                    Margin="5,0,0,0"
+                    BorderThickness="0"
+                    CornerRadius="3"
+                    AnimationDelay="250"                    
+                    Click="ZoomOut_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="18" Height="18"
                         Margin="0,2,0,0"
                         Data="{StaticResource IconZoomOut}"
                         Stretch="Fill"/>
-                </Button>
+                </c:Button>
                 <Label
                     x:Name="Separator5"
                     Foreground="Gray"
@@ -236,30 +259,40 @@
                     FontSize="16"
                     Content="|"
                     TextOptions.TextFormattingMode="Display"/>
-                <Button
+                <c:Button
                     x:Name="RotateRight"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="40" Height="40"
-                    Margin="5,0,0,0" 
+                    Margin="5,0,0,0"
+                    BorderThickness="0"
+                    CornerRadius="3"
+                    AnimationDelay="250"
                     Click="RotateRight_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="17" Height="19"
                         Data="{StaticResource IconRotateRight}"
                         Stretch="Fill"/>
-                </Button>
-                <Button
+                </c:Button>
+                <c:Button
                     x:Name="RotateLeft"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="40" Height="40"
-                    Margin="5,0,0,0" 
+                    Margin="5,0,0,0"
+                    BorderThickness="0"
+                    CornerRadius="3"
+                    AnimationDelay="250"
                     Click="RotateLeft_Click">
                     <Path
                         Fill="#7FFFFFFF"
                         Width="17" Height="19"
                         Data="{StaticResource IconRotateLeft}"
                         Stretch="Fill"/>
-                </Button>
+                </c:Button>
                 <Label
                     x:Name="Separator6"
                     Foreground="Gray"
@@ -269,11 +302,16 @@
                     FontSize="16"
                     Content="|"
                     TextOptions.TextFormattingMode="Display"/>
-                <Button
+                <c:Button
                     x:Name="Refresh"
-                    Style="{StaticResource RoundedTransparentButtonStyle}"
+                    Background="#00000000"
+                    HoverBrush="#0CFFFFFF"
+                    PressBrush="#19FFFFFF"
                     Width="40" Height="40"
                     Margin="5,0,0,0"
+                    BorderThickness="0"
+                    CornerRadius="3"
+                    AnimationDelay="250"
                     Click="Refresh_Click">
                     <Path
                         Fill="#7FFFFFFF"
@@ -281,7 +319,7 @@
                         Margin="0,2,0,0"
                         Data="{StaticResource IconRefresh}"
                         Stretch="Fill"/>
-                </Button>
+                </c:Button>
             </StackPanel>
         </Grid>
     </Grid>

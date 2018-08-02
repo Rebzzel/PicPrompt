@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:c="clr-namespace:PicPrompt.Resources.Controls"
              xmlns:local="clr-namespace:PicPrompt.Resources.Controls"
              mc:Ignorable="d"
              Width="400" Height="500">
@@ -24,19 +25,23 @@
                 <Grid
                     Height="36"
                     VerticalAlignment="Top">
-                    <local:ClickableLabel 
+                    <local:Button
                         x:Name="Back"
-                        Width="38" Height="36"
+                        Background="#00000000"
+                        HoverBrush="#10000000"
+                        PressBrush="#20000000"
+                        Width="40" Height="36"
                         HorizontalAlignment="Left"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" 
+                        BorderThickness="0"
+                        AnimationDelay="250"
+                        CornerRadius="3,0,0,0"
                         Click="Back_Click">
                         <Path
                             Fill="Black"
                             Width="10" Height="10"
                             Data="{StaticResource IconBack}"
                             Stretch="Fill"/>
-                    </local:ClickableLabel>
+                    </local:Button>
                 </Grid>
             </Grid>
         </Border>
