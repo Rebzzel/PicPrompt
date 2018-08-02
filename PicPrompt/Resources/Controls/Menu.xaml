@@ -51,26 +51,34 @@
                             Padding="5,0,5,2.5"
                             Content="|"
                             TextOptions.TextFormattingMode="Display"/>
-                        <ToggleButton
+                        <c:ToggleButton
+                            x:Name="General"
                             Background="#00000000"
+                            CheckedBrush="#FFCFCFCF"
+                            HoverBrush="#10000000"
+                            PressBrush="#20000000"
                             Width="36" Height="36"
-                            BorderThickness="0">
+                            BorderThickness="0" Click="General_Click">
                             <Path
                                 Fill="#FF252525"
                                 Width="13" Height="13"
                                 Data="{StaticResource IconHome}"
                                 Stretch="Fill"/>
-                        </ToggleButton>
-                        <ToggleButton
+                        </c:ToggleButton>
+                        <c:ToggleButton
+                            x:Name="About"
                             Background="#00000000"
+                            CheckedBrush="#FFCFCFCF"
+                            HoverBrush="#10000000"
+                            PressBrush="#20000000"
                             Width="36" Height="36"
-                            BorderThickness="0">
+                            BorderThickness="0" Click="About_Click">
                             <Path
                                 Fill="#FF252525"
                                 Width="13" Height="13"
                                 Data="{StaticResource IconInfo}"
                                 Stretch="Fill"/>
-                        </ToggleButton>
+                        </c:ToggleButton>
                     </StackPanel>
                 </Grid>
                 <ScrollViewer
