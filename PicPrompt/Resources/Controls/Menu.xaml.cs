@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -27,12 +28,20 @@ namespace PicPrompt.Resources.Controls
             }
         }
 
+        public void Hide()
+        {
+            if (Parent != null)
+            {
+                var parent = ((Grid)Parent);
+
+                parent.Children.Remove(this);
+                parent.Children.Remove(_backgroundRect);
+            }
+        }
+
         private void Back_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var parent = ((Grid)Parent);
-
-            parent.Children.Remove(this);
-            parent.Children.Remove(_backgroundRect);
+            Hide();
         }
     }
 }
