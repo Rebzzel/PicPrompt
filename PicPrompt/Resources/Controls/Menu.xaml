@@ -25,24 +25,57 @@
                 <Grid
                     Height="36"
                     VerticalAlignment="Top">
-                    <local:Button
-                        x:Name="Back"
-                        Background="#00000000"
-                        HoverBrush="#10000000"
-                        PressBrush="#20000000"
-                        Width="40" Height="36"
+                    <StackPanel
                         HorizontalAlignment="Left"
-                        BorderThickness="0"
-                        AnimationDelay="250"
-                        CornerRadius="3,0,0,0"
-                        Click="Back_Click">
-                        <Path
-                            Fill="Black"
-                            Width="10" Height="10"
-                            Data="{StaticResource IconBack}"
-                            Stretch="Fill"/>
-                    </local:Button>
+                        Orientation="Horizontal">
+                        <local:Button
+                            x:Name="Back"
+                            Background="#00000000"
+                            HoverBrush="#10000000"
+                            PressBrush="#20000000"
+                            Width="40" Height="36"
+                            HorizontalAlignment="Left"
+                            BorderThickness="0"
+                            AnimationDelay="250"
+                            CornerRadius="3,0,0,0"
+                            Click="Back_Click" Foreground="#FF646464">
+                            <Path
+                                Fill="#FF252525"
+                                Width="10" Height="10"
+                                Data="{StaticResource IconBack}"
+                                Stretch="Fill"/>
+                        </local:Button>
+                        <Label
+                            Foreground="#3F808080"
+                            VerticalContentAlignment="Center"
+                            Padding="5,0,5,2.5"
+                            Content="|"
+                            TextOptions.TextFormattingMode="Display"/>
+                        <ToggleButton
+                            Background="#00000000"
+                            Width="36" Height="36"
+                            BorderThickness="0">
+                            <Path
+                                Fill="#FF252525"
+                                Width="13" Height="13"
+                                Data="{StaticResource IconHome}"
+                                Stretch="Fill"/>
+                        </ToggleButton>
+                        <ToggleButton
+                            Background="#00000000"
+                            Width="36" Height="36"
+                            BorderThickness="0">
+                            <Path
+                                Fill="#FF252525"
+                                Width="13" Height="13"
+                                Data="{StaticResource IconInfo}"
+                                Stretch="Fill"/>
+                        </ToggleButton>
+                    </StackPanel>
                 </Grid>
+                <ScrollViewer
+                    Grid.Row="1"
+                    Margin="1,1,1,8"/>
             </Grid>
         </Border>
     </Grid>
