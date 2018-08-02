@@ -163,12 +163,7 @@ namespace PicPrompt
         {
             System.Diagnostics.Process.Start("notepad.exe", $"{System.IO.Directory.GetCurrentDirectory()}\\PicPrompt.json");
 
-            MainGrid.Children.Add(new Rectangle
-            {
-                Fill = new SolidColorBrush(Color.FromArgb(122, 13, 13, 13))
-            });
-
-            MainGrid.Children.Add(new Resources.Controls.Menu());
+            new Resources.Controls.Menu().Show(MainGrid);
         }
 
         private void About_Click(object sender, RoutedEventArgs e)

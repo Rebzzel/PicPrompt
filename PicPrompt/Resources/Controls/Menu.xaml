@@ -8,28 +8,36 @@
              Width="400" Height="500">
     <Grid Margin="20">
         <Border 
-            Background="White"
+            Background="WhiteSmoke"
             CornerRadius="7">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9*"/>
+                    <RowDefinition Height="106*"/>
+                </Grid.RowDefinitions>
                 <Separator
                     Background="#FFCFCFCF"
                     Width="360" Height="1"
                     VerticalAlignment="Top"
-                    Margin="0,36,0,0"/>
-                <StackPanel
+                    Margin="0" 
+                    Grid.Row="1"/>
+                <Grid
                     Height="36"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal">
-                    <Button
-                        Style="{StaticResource TransparentButtonStyle}"
-                        Width="38" Height="36">
+                    VerticalAlignment="Top">
+                    <local:ClickableLabel 
+                        x:Name="Back"
+                        Width="38" Height="36"
+                        HorizontalAlignment="Left"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" 
+                        Click="Back_Click">
                         <Path
                             Fill="Black"
                             Width="10" Height="10"
                             Data="{StaticResource IconBack}"
                             Stretch="Fill"/>
-                    </Button>
-                </StackPanel>
+                    </local:ClickableLabel>
+                </Grid>
             </Grid>
         </Border>
     </Grid>
