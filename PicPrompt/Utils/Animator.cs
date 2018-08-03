@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace PicPrompt.Utils
@@ -39,7 +40,7 @@ namespace PicPrompt.Utils
             return false;
         }
 
-        public static async Task<bool> Move(object target, Thickness to, int delay)
+        public static async Task<bool> Move(object target, Thickness to, int delay, double accelerationRatio = 0, double decelerationRatio = 0)
         {
             var obj = target as FrameworkElement;
 
@@ -49,6 +50,8 @@ namespace PicPrompt.Utils
                 {
                     To = to,
                     Duration = TimeSpan.FromMilliseconds(delay),
+                    AccelerationRatio = accelerationRatio,
+                    DecelerationRatio = decelerationRatio
                 });
 
                 await Task.Delay(delay);
@@ -83,6 +86,48 @@ namespace PicPrompt.Utils
 
                 if (opacity <= 0)
                     obj.Visibility = Visibility.Collapsed;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public static async Task<bool> Scale(object target, double fromX, double fromY,  double toX, double toY, int delay)
+        {
+            var obj = target as FrameworkElement;
+
+            if (obj != null)
+            {
+                var transformGroup = new TransformGroup();
+
+                var scaleTransform = new ScaleTransform();
+                transformGroup.Children.Add(scaleTransform);
+
+                obj.RenderTransform = transformGroup;
+                obj.RenderTransformOrigin = new Point(0.5, 0.5);
+
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, new DoubleAnimation
+                {
+                    From = fromX,
+                    To = toX,
+                    Duration = TimeSpan.FromMilliseconds(delay),
+                });
+
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, new DoubleAnimation
+                {
+                    From = fromY,
+                    To = toY,
+                    Duration = TimeSpan.FromMilliseconds(delay),
+                });
+
+                await Task.Delay(delay);
+
+                scaleTransform.ScaleX = toX;
+                scaleTransform.ScaleY = toY;
+
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
+                scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
 
                 return true;
             }

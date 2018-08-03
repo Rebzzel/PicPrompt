@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PicPrompt.Resources.Controls
 {
@@ -19,7 +20,7 @@ namespace PicPrompt.Resources.Controls
 
             _background = new Rectangle
             {
-                Fill = new SolidColorBrush(Color.FromArgb(122, 13, 13, 13))
+                Fill = new SolidColorBrush(Color.FromArgb(122, 0, 0, 0))
             };
 
             _aboutPage = new AboutPage();
@@ -50,6 +51,8 @@ namespace PicPrompt.Resources.Controls
 
             panel.Children.Add(_background);
             panel.Children.Add(this);
+
+            Utils.Animator.Scale(this, 0.6, 0.6, 1, 1, 50);
         }
 
         public void Hide()
@@ -59,8 +62,21 @@ namespace PicPrompt.Resources.Controls
 
             var panel = ((Panel)Parent);
 
-            panel.Children.Remove(this);
-            panel.Children.Remove(_background);
+            Utils.Animator.Scale(this, 1, 1, 0.6, 0.6, 100);
+
+            var timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(100)
+            };
+
+            timer.Tick += (_, __) =>
+            {
+                panel.Children.Remove(this);
+                panel.Children.Remove(_background);
+                timer.Stop();
+            };
+
+            timer.Start();
         }
 
         public void ChangePage(int index)
