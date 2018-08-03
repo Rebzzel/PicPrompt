@@ -12,12 +12,15 @@ namespace PicPrompt
 {
     public partial class MainWindow : Window, IDisposable
     {
+        private Resources.Controls.Menu _menu;
         private MagickImage _image;
         private bool _imageIsEdited;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            _menu = new Resources.Controls.Menu();
         }
 
         public void Dispose()
@@ -161,14 +164,16 @@ namespace PicPrompt
 
         private void Options_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("notepad.exe", $"{System.IO.Directory.GetCurrentDirectory()}\\PicPrompt.json");
+            _menu.Show(MainGrid);
+            _menu.ChangePage(0);
 
-            new Resources.Controls.Menu().Show(MainGrid);
+            System.Diagnostics.Process.Start("notepad.exe", $"{System.IO.Directory.GetCurrentDirectory()}\\PicPrompt.json");
         }
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Rebzzel/PicPrompt");
+            _menu.Show(MainGrid);
+            _menu.ChangePage(1);
         }
 
         public void OpenImage(string path)

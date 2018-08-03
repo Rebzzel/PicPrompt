@@ -95,7 +95,7 @@
             </EventTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <!-- Button -->
     <Style TargetType="c:Button">
         <Setter Property="Template">

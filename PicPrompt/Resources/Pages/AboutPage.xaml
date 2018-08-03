@@ -1,0 +1,58 @@
+﻿<Page x:Class="PicPrompt.Resources.Pages.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:c="clr-namespace:PicPrompt.Resources.Controls"
+      xmlns:local="clr-namespace:PicPrompt.Resources.Pages"
+      mc:Ignorable="d" 
+      Width="358">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Image
+                Width="64" Height="64"
+                VerticalAlignment="Top"
+                Margin="40,40,40,10"
+                Source="pack://application:,,,/PicPrompt;component/Resources/Images/icon.png"
+                RenderOptions.BitmapScalingMode="Fant"/>
+            <Label
+                VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center"
+                FontFamily="Segoe UI Semibold"
+                FontSize="16"
+                Content="PicPrompt (Beta)"/>
+            <Label
+                x:Name="Version"
+                Foreground="#FFAEAEAE"
+                VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center"
+                FontSize="12"/>
+            <Label
+                Foreground="Gray"
+                VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center"
+                FontSize="14"
+                Content="Fast, simple and lightweight image viewer." 
+                Margin="0,0,0,5"/>
+            <c:Button
+                x:Name="Github"
+                Background="#00000000"
+                HoverBrush="#10000000"
+                PressBrush="#20000000"
+                Width="32" Height="32"
+                BorderThickness="0"
+                AnimationDelay="250"
+                CornerRadius="20" 
+                Click="Github_Click">
+                <Path
+                    Fill="#FF252525"
+                    Width="20" Height="20"
+                    Data="{StaticResource IconGithub}"
+                    Stretch="Fill"/>
+            </c:Button>
+            <!--<Separator
+                Background="LightGray"
+                Margin="30,10"/>-->
+        </StackPanel>
+    </Grid>
+</Page>

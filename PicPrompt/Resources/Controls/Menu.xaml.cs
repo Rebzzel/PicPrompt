@@ -1,47 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using PicPrompt.Resources.Pages;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 namespace PicPrompt.Resources.Controls
 {
     public partial class Menu : UserControl
     {
-        private Rectangle _backgroundRect;
+        private Rectangle _background;
+        private AboutPage _aboutPage;
 
         public Menu()
         {
             InitializeComponent();
-        }
 
-        public void Show(Grid parent)
-        {
-            if (parent != null)
+            _background = new Rectangle
             {
-                _backgroundRect = new Rectangle
-                {
-                    Fill = new SolidColorBrush(Color.FromArgb(122, 13, 13, 13))
-                };
+                Fill = new SolidColorBrush(Color.FromArgb(122, 13, 13, 13))
+            };
 
-                parent.Children.Add(_backgroundRect);
-                parent.Children.Add(this);
-            }
+            _aboutPage = new AboutPage();
         }
 
-        public void Hide()
-        {
-            if (Parent != null)
-            {
-                var parent = ((Grid)Parent);
-
-                parent.Children.Remove(this);
-                parent.Children.Remove(_backgroundRect);
-            }
-        }
-
-        private void Back_Click(object sender,RoutedEventArgs e)
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
             Hide();
         }
@@ -56,35 +40,65 @@ namespace PicPrompt.Resources.Controls
             ChangePage(1);
         }
 
+        public void Show(Panel panel)
+        {
+            if (panel == null)
+                throw new ArgumentNullException();
+
+            if (panel == Parent)
+                return;
+
+            panel.Children.Add(_background);
+            panel.Children.Add(this);
+        }
+
+        public void Hide()
+        {
+            if (Parent == null)
+                return;
+
+            var panel = ((Panel)Parent);
+
+            panel.Children.Remove(this);
+            panel.Children.Remove(_background);
+        }
+
         public void ChangePage(int index)
         {
-            var parent = ((Panel)General.Parent);
+            foreach (UIElement child in ((Panel)General.Parent).Children)
+            {
+                var button = child as ToggleButton;
+
+                if (button == null)
+                    continue;
+
+                button.IsChecked = false;
+                button.Background.BeginAnimation(SolidColorBrush.ColorProperty, null);
+            }
 
             switch (index)
             {
                 case 0:
-                    foreach (UIElement child in parent.Children)
+                    General.IsChecked = true;
+
+                    General.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation
                     {
-                        var obj = child as ToggleButton;
+                        To = ((SolidColorBrush)General.PressBrush).Color,
+                        Duration = TimeSpan.FromMilliseconds(0)
+                    });
 
-                        if (obj == null || obj == General)
-                            continue;
-
-                        obj.IsChecked = false;
-                        obj.Background.BeginAnimation(SolidColorBrush.ColorProperty, null);
-                    }
+                    Frame.Content = null;
                     break;
                 case 1:
-                    foreach (UIElement child in parent.Children)
+                    About.IsChecked = true;
+
+                    About.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation
                     {
-                        var obj = child as ToggleButton;
+                        To = ((SolidColorBrush)About.PressBrush).Color,
+                        Duration = TimeSpan.FromMilliseconds(0)
+                    });
 
-                        if (obj == null || obj == About)
-                            continue;
-
-                        obj.IsChecked = false;
-                        obj.Background.BeginAnimation(SolidColorBrush.ColorProperty, null);
-                    }
+                    Frame.Content = _aboutPage;
                     break;
             }
         }

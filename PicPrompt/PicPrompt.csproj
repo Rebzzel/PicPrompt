@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="Resources\Controls\ToggleButton.cs" />
     <Compile Include="Resources\Controls\ZoomControl.cs" />
+    <Compile Include="Resources\Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Animator.cs" />
     <Compile Include="Utils\Configuration.cs" />
     <Compile Include="Utils\SingleInstance.cs" />
@@ -89,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

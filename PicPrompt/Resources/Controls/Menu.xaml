@@ -58,7 +58,9 @@
                             HoverBrush="#10000000"
                             PressBrush="#20000000"
                             Width="36" Height="36"
-                            BorderThickness="0" Click="General_Click">
+                            BorderThickness="0"
+                            AnimationDelay="250"
+                            Click="General_Click">
                             <Path
                                 Fill="#FF252525"
                                 Width="13" Height="13"
@@ -72,7 +74,9 @@
                             HoverBrush="#10000000"
                             PressBrush="#20000000"
                             Width="36" Height="36"
-                            BorderThickness="0" Click="About_Click">
+                            AnimationDelay="250"
+                            BorderThickness="0" 
+                            Click="About_Click">
                             <Path
                                 Fill="#FF252525"
                                 Width="13" Height="13"
@@ -83,7 +87,11 @@
                 </Grid>
                 <ScrollViewer
                     Grid.Row="1"
-                    Margin="1,1,1,8"/>
+                    Margin="1,1,1,8">
+                    <Frame 
+                        x:Name="Frame" 
+                        NavigationUIVisibility="Hidden"/>
+                </ScrollViewer>
             </Grid>
         </Border>
     </Grid>
