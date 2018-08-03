@@ -15,22 +15,21 @@ namespace PicPrompt
         [STAThread]
         public static void Main()
         {
-            if (!File.Exists("PicPrompt.json"))
-            {
-                File.WriteAllText("PicPrompt.json",
-@"{
-    ""allow-background-work"": true
-}");
-            }
-
-            Config = new Utils.Configuration("PicPrompt.json");
-
             if (SingleInstance<App>.InitializeAsFirstInstance("PicPrompt"))
             {
+                var splitPath = SingleInstance<App>.CommandLineArgs[0].Split('\\');
+
+                string dirPath = splitPath[0];
+                for (int i = 1; i < splitPath.Length - 1; i++)
+                {
+                    dirPath += $@"\{splitPath[i]}";
+                }
+
                 var app = new App();
                 app.InitializeComponent();
+                app.InitializeConfig(dirPath);
                 app._backgroundWindow = new Window();
-                
+
                 var mainWindow = new MainWindow();
 
                 mainWindow.Closed += (_, __) =>
@@ -51,6 +50,16 @@ namespace PicPrompt
 
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
+            var splitPath = args[0].Split('\\');
+
+            string dirPath = splitPath[0];
+            for (int i = 1; i < splitPath.Length - 1; i++)
+            {
+                dirPath += $@"\{splitPath[i]}";
+            }
+
+            InitializeConfig(dirPath);
+
             var mainWindow = MainWindow as MainWindow;
 
             if (mainWindow == null)
@@ -67,6 +76,19 @@ namespace PicPrompt
                 mainWindow.OpenImage(args[1]);
 
             return true;
+        }
+
+        public void InitializeConfig(string path)
+        {
+            if (!File.Exists($"{path}\\PicPrompt.json"))
+            {
+                File.WriteAllText($"{path}\\PicPrompt.json",
+@"{
+    ""allow-background-work"": true
+}");
+            }
+
+            Config = new Utils.Configuration($"{path}\\PicPrompt.json");
         }
     }
 }

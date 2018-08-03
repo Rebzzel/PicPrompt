@@ -34,7 +34,9 @@
                         Width="34" Height="32" 
                         Padding="8,0,0,0">
                         <MenuItem.Header>
-                            <Image Width="16" Height="16" Source="Resources/Images/icon.png"/>
+                            <Image 
+                                Width="16" Height="16" 
+                                Source="Resources/Images/icon.png"/>
                         </MenuItem.Header>
                         <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click"/>
                         <MenuItem Header="Save As" IsEnabled="False" InputGestureText="Ctrl+S" Click="SaveAs_Click"/>
