@@ -149,14 +149,19 @@
                             Width="20" Height="20"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="1">
-                            <Path
-                                x:Name="Check" 
-                                Fill="White" 
-                                Width="12" Height="12"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{DynamicResource IconCheck}"
-                                Stretch="Fill"/>
+                            <Grid>
+                                <Path
+                                    x:Name="Check" 
+                                    Fill="White" 
+                                    Width="12" Height="12"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{DynamicResource IconCheck}"
+                                    Stretch="Fill"/>
+                                <Rectangle 
+                                    x:Name="Disable" 
+                                    Fill="#3F747474"/>
+                            </Grid>
                         </Border>
                         <ContentPresenter
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -164,6 +169,9 @@
                             Margin="{TemplateBinding Padding}"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter TargetName="Disable" Property="Fill" Value="Transparent"/>
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="Check" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="Border" Property="Background" Value="Transparent"/>

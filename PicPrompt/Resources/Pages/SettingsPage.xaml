@@ -1,0 +1,85 @@
+﻿<Page x:Class="PicPrompt.Resources.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PicPrompt.Resources.Pages"
+      mc:Ignorable="d" 
+      Width="358">
+    <StackPanel
+        VerticalAlignment="Top"
+        Margin="30">
+        <Label
+            Foreground="#FF252525"
+            Margin="-15, 0"
+            FontFamily="Segoe UI Semibold"
+            FontSize="16" 
+            Content="General" />
+        <!--<Separator Margin="-30, 5"/>-->
+        <CheckBox 
+            BorderBrush="Gray"
+            Margin="0,5"
+            BorderThickness="2" 
+            IsEnabled="False" Height="28">
+            <StackPanel>
+                <Label
+                    Margin="5,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="Start with Windows"/>
+            </StackPanel>
+        </CheckBox>
+        <CheckBox
+            x:Name="BackgroundWork"
+            BorderBrush="Gray"
+            Height="42"
+            Margin="0,0,0,5"
+            BorderThickness="2">
+            <StackPanel>
+                <Label
+                    Margin="5,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="Allow background work"/>
+                <Label
+                    Foreground="Gray"
+                    Margin="5,-10,0,0"
+                    Content="This allows to open the image faster"/>
+            </StackPanel>
+        </CheckBox>
+        <Label
+            Foreground="#FF252525"
+            Margin="-15,0,-15,0"
+            FontFamily="Segoe UI Semibold"
+            FontSize="16" 
+            Content="Updates"/>
+        <CheckBox
+            BorderBrush="Gray"
+            Height="28"
+            Margin="0,5"
+            BorderThickness="2"
+            IsEnabled="False">
+            <StackPanel>
+                <Label
+                    Margin="5,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="Enable auto updates"/>
+            </StackPanel>
+        </CheckBox>
+        <CheckBox 
+            BorderBrush="Gray"
+            Height="28"
+            Margin="0,0,0,5"
+            BorderThickness="2"
+            IsEnabled="False">
+            <StackPanel>
+                <Label
+                    Margin="5,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="Enable auto check for updates"/>
+            </StackPanel>
+        </CheckBox>
+    </StackPanel>
+</Page>

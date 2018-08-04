@@ -10,12 +10,14 @@ namespace PicPrompt.Utils
         private JsonData _data;
         private FileSystemWatcher _watcher;
 
+        public FileInfo info;
+
         public Configuration(string path)
         {
             if (!File.Exists(path))
                 throw new FileNotFoundException();
 
-            var info = new FileInfo(path);
+            info = new FileInfo(path);
 
             _data = JsonMapper.ToObject(File.ReadAllText(info.FullName));
 

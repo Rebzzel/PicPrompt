@@ -12,6 +12,7 @@ namespace PicPrompt.Resources.Controls
     public partial class Menu : UserControl
     {
         private Rectangle _background;
+        private SettingsPage _settingsPage;
         private AboutPage _aboutPage;
 
         public Menu()
@@ -23,6 +24,7 @@ namespace PicPrompt.Resources.Controls
                 Fill = new SolidColorBrush(Color.FromArgb(122, 0, 0, 0))
             };
 
+            _settingsPage = new SettingsPage();
             _aboutPage = new AboutPage();
         }
 
@@ -31,7 +33,7 @@ namespace PicPrompt.Resources.Controls
             Hide();
         }
 
-        private void General_Click(object sender, RoutedEventArgs e)
+        private void Settings_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(0);
         }
@@ -81,7 +83,7 @@ namespace PicPrompt.Resources.Controls
 
         public void ChangePage(int index)
         {
-            foreach (UIElement child in ((Panel)General.Parent).Children)
+            foreach (UIElement child in ((Panel)Settings.Parent).Children)
             {
                 var button = child as ToggleButton;
 
@@ -95,15 +97,15 @@ namespace PicPrompt.Resources.Controls
             switch (index)
             {
                 case 0:
-                    General.IsChecked = true;
+                    Settings.IsChecked = true;
 
-                    General.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation
+                    Settings.Background.BeginAnimation(SolidColorBrush.ColorProperty, new ColorAnimation
                     {
-                        To = ((SolidColorBrush)General.PressBrush).Color,
+                        To = ((SolidColorBrush)Settings.PressBrush).Color,
                         Duration = TimeSpan.FromMilliseconds(0)
                     });
 
-                    Frame.Content = null;
+                    Frame.Content = _settingsPage;
                     break;
                 case 1:
                     About.IsChecked = true;
