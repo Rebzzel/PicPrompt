@@ -34,7 +34,8 @@
             BorderBrush="Gray"
             Height="42"
             Margin="0,0,0,5"
-            BorderThickness="2">
+            BorderThickness="2" 
+            Click="BackgroundWork_Click">
             <StackPanel>
                 <Label
                     Margin="5,0,0,0"

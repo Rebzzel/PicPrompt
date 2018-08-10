@@ -11,12 +11,12 @@ namespace PicPrompt.Resources.Pages
             InitializeComponent();
 
             BackgroundWork.IsChecked = (bool)App.Config["allow-background-work"];
-            BackgroundWork.Click += (_, __) => UpdateConfig();
         }
 
-        public void UpdateConfig()
+        private void BackgroundWork_Click(object sender, RoutedEventArgs e)
         {
-            File.WriteAllText($"{App.Config.info.FullName}", "{\n\t\"allow-background-work\": " + BackgroundWork.IsChecked.ToString().ToLower() + "\n}");
+            App.Config["allow-background-work"] = BackgroundWork.IsChecked;
+            App.Config.Save();
         }
     }
 }
