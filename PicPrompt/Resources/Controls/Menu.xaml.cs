@@ -21,7 +21,8 @@ namespace PicPrompt.Resources.Controls
 
             _background = new Rectangle
             {
-                Fill = new SolidColorBrush(Color.FromArgb(122, 0, 0, 0))
+                Fill = new SolidColorBrush(Color.FromArgb(122, 0, 0, 0)),
+                Opacity = 0
             };
 
             _settingsPage = new SettingsPage();
@@ -54,7 +55,8 @@ namespace PicPrompt.Resources.Controls
             panel.Children.Add(_background);
             panel.Children.Add(this);
 
-            Utils.Animator.Scale(this, 0.6, 0.6, 1, 1, 50);
+            Utils.Animator.Opacity(_background, 1, 150);
+            Utils.Animator.Scale(this, 0.3, 0.3, 1, 1, 150);
         }
 
         public void Hide()
@@ -64,11 +66,12 @@ namespace PicPrompt.Resources.Controls
 
             var panel = ((Panel)Parent);
 
-            Utils.Animator.Scale(this, 1, 1, 0.6, 0.6, 100);
+            Utils.Animator.Opacity(_background, 0, 150);
+            Utils.Animator.Scale(this, 1, 1, 0.3, 0.3, 150);
 
             var timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(100)
+                Interval = TimeSpan.FromMilliseconds(150)
             };
 
             timer.Tick += (_, __) =>

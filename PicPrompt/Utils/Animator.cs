@@ -84,8 +84,8 @@ namespace PicPrompt.Utils
 
                 obj.BeginAnimation(FrameworkElement.OpacityProperty, null);
 
-                if (opacity <= 0)
-                    obj.Visibility = Visibility.Collapsed;
+                /*if (opacity <= 0)
+                    obj.Visibility = Visibility.Collapsed;*/
 
                 return true;
             }
