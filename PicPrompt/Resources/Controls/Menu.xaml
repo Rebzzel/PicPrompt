@@ -38,7 +38,7 @@
                             BorderThickness="0"
                             AnimationDelay="250"
                             CornerRadius="3,0,0,0"
-                            Click="Back_Click" Foreground="#FF646464">
+                            Click="Back_Click">
                             <Path
                                 Fill="#FF252525"
                                 Width="10" Height="10"
@@ -57,7 +57,7 @@
                             CheckedBrush="#FFCFCFCF"
                             HoverBrush="#10000000"
                             PressBrush="#20000000"
-                            Width="36" Height="36"
+                            Width="40" Height="36"
                             BorderThickness="0"
                             AnimationDelay="250"
                             Click="Settings_Click">
@@ -73,7 +73,7 @@
                             CheckedBrush="#FFCFCFCF"
                             HoverBrush="#10000000"
                             PressBrush="#20000000"
-                            Width="36" Height="36"
+                            Width="40" Height="36"
                             AnimationDelay="250"
                             BorderThickness="0" 
                             Click="About_Click">

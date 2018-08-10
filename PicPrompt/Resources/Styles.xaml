@@ -142,42 +142,71 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel Orientation="Horizontal">
-                        <Border
-                            x:Name="Border"
-                            Background="{TemplateBinding BorderBrush}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            Width="20" Height="20"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="1">
-                            <Grid>
-                                <Path
-                                    x:Name="Check" 
-                                    Fill="White" 
-                                    Width="12" Height="12"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{DynamicResource IconCheck}"
-                                    Stretch="Fill"/>
-                                <Rectangle 
-                                    x:Name="Disable" 
-                                    Fill="#3F747474"/>
-                            </Grid>
-                        </Border>
+                        <Grid>
+                            <Ellipse
+                                x:Name="Ripple"
+                                Fill="{TemplateBinding Background}"
+                                Width="40" Height="40"
+                                Opacity="0"/>
+                            <Border
+                                x:Name="Border"
+                                Background="Transparent"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Width="18" Height="18"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="1"
+                                SnapsToDevicePixels="True">
+                                <Grid>
+                                    <Path
+                                        x:Name="Check"
+                                        Fill="White"
+                                        Width="12" Height="10"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Visibility="Collapsed"
+                                        Data="{DynamicResource IconCheck}"
+                                        StrokeThickness="0.2"
+                                        Stretch="Fill"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
                         <ContentPresenter
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             Margin="{TemplateBinding Padding}"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="True">
-                            <Setter TargetName="Disable" Property="Fill" Value="Transparent"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="Check" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="Border" Property="Background" Value="Transparent"/>
-                        </Trigger>
                         <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding ElementName=Ripple, Path=Fill}"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ElementName=Ripple, Path=Fill}"/>
                             <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#7F808080"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Ripple"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0.3"
+                                            Duration="0:0:0:0.11"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="Ripple"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0:0.11"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
