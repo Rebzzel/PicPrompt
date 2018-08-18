@@ -14,7 +14,6 @@ namespace PicPrompt.Utils
         
         public Configuration()
         {
-            _watcher = new FileSystemWatcher();
         }
 
         public Configuration(string path)
