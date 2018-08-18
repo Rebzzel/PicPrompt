@@ -7,7 +7,7 @@ namespace PicPrompt.Utils
 {
     public class Configuration : IDisposable
     {
-        public FileInfo fileInfo { get; private set; }
+        public FileInfo FileInfo { get; private set; }
 
         protected JsonData _data;
         private FileSystemWatcher _watcher;
@@ -33,10 +33,10 @@ namespace PicPrompt.Utils
 
         public void Load(string path)
         {
-            fileInfo = new FileInfo(path);
+            FileInfo = new FileInfo(path);
 
-            _data = JsonMapper.ToObject(File.ReadAllText(fileInfo.FullName));
-            _watcher = new FileSystemWatcher(fileInfo.DirectoryName, fileInfo.Name)
+            _data = JsonMapper.ToObject(File.ReadAllText(FileInfo.FullName));
+            _watcher = new FileSystemWatcher(FileInfo.DirectoryName, FileInfo.Name)
             {
                 NotifyFilter = NotifyFilters.LastWrite,
                 EnableRaisingEvents = true
@@ -49,7 +49,7 @@ namespace PicPrompt.Utils
                 {
                     await Task.Delay(100);
 
-                    _data = JsonMapper.ToObject(File.ReadAllText(fileInfo.FullName));
+                    _data = JsonMapper.ToObject(File.ReadAllText(FileInfo.FullName));
                 }).Start();
             };
         }
@@ -58,7 +58,7 @@ namespace PicPrompt.Utils
         {
             if (_data != null)
             {
-                File.WriteAllText(fileInfo.FullName, _data.ToJson());
+                File.WriteAllText(FileInfo.FullName, _data.ToJson());
             }            
         }
 
