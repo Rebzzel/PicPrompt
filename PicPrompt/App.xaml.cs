@@ -80,15 +80,14 @@ namespace PicPrompt
 
         public void InitializeConfig(string path)
         {
-            if (!File.Exists($"{path}\\PicPrompt.json"))
+            var filePath = $"{path}\\PicPrompt.json";
+
+            if (!File.Exists(filePath))
             {
-                File.WriteAllText($"{path}\\PicPrompt.json",
-@"{
-    ""allow-background-work"": true
-}");
+                File.WriteAllText(filePath, "{\"allow-background-work\":true}");
             }
 
-            Config = new Utils.Configuration($"{path}\\PicPrompt.json");
+            Config = new Utils.Configuration(filePath);
         }
     }
 }
