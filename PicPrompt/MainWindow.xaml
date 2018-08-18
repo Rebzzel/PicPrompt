@@ -168,7 +168,19 @@
             <Image
                 x:Name="Viewer"
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Center">
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Zoom In" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
+                        <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Rotate Right" InputGestureText="Ctrl+D" Click="RotateRight_Click"/>
+                        <MenuItem Header="Rotate Left" InputGestureText="Ctrl+A" Click="RotateLeft_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Refresh" InputGestureText="Ctrl+0" Click="Refresh_Click"/>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
         </c:ZoomControl>
         <Grid
             x:Name="NoneContentGrid"
