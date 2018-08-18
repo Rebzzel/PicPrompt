@@ -14,19 +14,20 @@
             Margin="-15, 0"
             FontFamily="Segoe UI Semibold"
             FontSize="24" 
-            Content="Settings" />
+            Content="Settings"/>
         <Label
             Foreground="#FF252525"
             Margin="-15, 0"
             FontFamily="Segoe UI Semibold"
             FontSize="16" 
-            Content="General" />
+            Content="General"/>
         <!--<Separator Margin="-30, 5"/>-->
         <CheckBox 
             BorderBrush="Gray"
             Margin="0,5"
+            Padding="-5,0,0,0"
             BorderThickness="2" 
-            IsEnabled="False" Padding="-5,0,0,0">
+            IsEnabled="False">
             <Label
                 Margin="5,0,0,0"
                 FontFamily="Segoe UI Semibold"
@@ -35,10 +36,12 @@
         </CheckBox>
         <CheckBox
             x:Name="BackgroundWork"
+            Background="#FF252525"
             BorderBrush="Gray"
             Margin="0,0,0,5"
+            Padding="-5,0,0,0"
             BorderThickness="2" 
-            Click="BackgroundWork_Click" Padding="-5,0,0,0" Background="#FF252525">
+            Click="BackgroundWork_Click">
             <StackPanel>
                 <Label
                     Margin="5,0,0,0"
@@ -53,6 +56,26 @@
         </CheckBox>
         <Label
             Foreground="#FF252525"
+            Margin="-15, 0"
+            FontFamily="Segoe UI Semibold"
+            FontSize="16" 
+            Content="Interface"/>
+        <CheckBox 
+            Background="#7F808080"
+            BorderBrush="Gray"
+            Margin="0,5"
+            Padding="-5,0,0,0"
+            BorderThickness="2" 
+            IsEnabled="False"  
+            IsChecked="True">
+            <Label
+                Margin="5,0,0,0"
+                FontFamily="Segoe UI Semibold"
+                FontSize="13"
+                Content="Enable animations"/>
+        </CheckBox>
+        <Label
+            Foreground="#FF252525"
             Margin="-15,0,-15,0"
             FontFamily="Segoe UI Semibold"
             FontSize="16" 
@@ -60,8 +83,9 @@
         <CheckBox
             BorderBrush="Gray"
             Margin="0,5"
+            Padding="-5,0,0,0"
             BorderThickness="2"
-            IsEnabled="False" Padding="-5,0,0,0">
+            IsEnabled="False" >
             <Label
                 Margin="5,0,0,0"
                 FontFamily="Segoe UI Semibold"
@@ -71,8 +95,9 @@
         <CheckBox 
             BorderBrush="Gray"
             Margin="0,0,0,5"
+            Padding="-5,0,0,0"
             BorderThickness="2"
-            IsEnabled="False" Padding="-5,0,0,0">
+            IsEnabled="False" >
             <Label
                 Margin="5,0,0,0"
                 FontFamily="Segoe UI Semibold"
