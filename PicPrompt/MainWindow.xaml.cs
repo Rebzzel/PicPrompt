@@ -213,8 +213,8 @@ namespace PicPrompt
                 Toolbar.Opacity = 0;
                 Toolbar.Visibility = Visibility.Visible;
 
-                Utils.Animator.Move(Toolbar, new Thickness(0, 0, 0, 30), 500);
-                Utils.Animator.Opacity(Toolbar, 1, 1000);
+                Utils.Animator.Margin(Toolbar, new Thickness(0, 0, 0, 30), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(500), AccelerationRatio = 0.25, DecelerationRatio = 0.75 });
+                Utils.Animator.Opacity(Toolbar, 1, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(1000), AccelerationRatio = 0.25, DecelerationRatio = 0.75 });
             }
         }
     }

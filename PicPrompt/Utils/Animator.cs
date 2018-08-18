@@ -8,7 +8,21 @@ namespace PicPrompt.Utils
 {
     public class Animator
     {
-        public static async Task<bool> Resize(object target, double width, double height, int delay)
+        public class AnimationOptions
+        {
+            public Duration Duration;
+            public double AccelerationRatio;
+            public double DecelerationRatio;
+
+            public AnimationOptions()
+            {
+                Duration = TimeSpan.FromMilliseconds(0);
+                AccelerationRatio = 0.0;
+                DecelerationRatio = 0.0;
+            }
+        }
+
+        public static async Task Size(object target, Size size, AnimationOptions options)
         {
             var obj = target as FrameworkElement;
 
@@ -16,57 +30,31 @@ namespace PicPrompt.Utils
             {
                 obj.BeginAnimation(FrameworkElement.WidthProperty, new DoubleAnimation
                 {
-                    To = width,
-                    Duration = TimeSpan.FromMilliseconds(delay),
+                    To = size.Width,
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
                 });
 
                 obj.BeginAnimation(FrameworkElement.HeightProperty, new DoubleAnimation
                 {
-                    To = width,
-                    Duration = TimeSpan.FromMilliseconds(delay),
+                    To = size.Height,
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
                 });
 
-                await Task.Delay(delay);
-
-                obj.Width = width;
-                obj.Height = height;
+                await Task.Delay(options.Duration.TimeSpan.Milliseconds);
 
                 obj.BeginAnimation(FrameworkElement.WidthProperty, null);
                 obj.BeginAnimation(FrameworkElement.HeightProperty, null);
 
-                return true;
+                obj.Width = size.Width;
+                obj.Height = size.Height;
             }
-
-            return false;
         }
 
-        public static async Task<bool> Move(object target, Thickness to, int delay, double accelerationRatio = 0, double decelerationRatio = 0)
-        {
-            var obj = target as FrameworkElement;
-
-            if (obj != null)
-            {
-                obj.BeginAnimation(FrameworkElement.MarginProperty, new ThicknessAnimation
-                {
-                    To = to,
-                    Duration = TimeSpan.FromMilliseconds(delay),
-                    AccelerationRatio = accelerationRatio,
-                    DecelerationRatio = decelerationRatio
-                });
-
-                await Task.Delay(delay);
-
-                obj.Margin = to;
-
-                obj.BeginAnimation(FrameworkElement.MarginProperty, null);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public static async Task<bool> Opacity(object target, double opacity, int delay)
+        public static async Task Opacity(object target, double opacity, AnimationOptions options)
         {
             var obj = target as FrameworkElement;
 
@@ -75,25 +63,42 @@ namespace PicPrompt.Utils
                 obj.BeginAnimation(FrameworkElement.OpacityProperty, new DoubleAnimation
                 {
                     To = opacity,
-                    Duration = TimeSpan.FromMilliseconds(delay),
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
                 });
 
-                await Task.Delay(delay);
-
-                obj.Opacity = opacity;
+                await Task.Delay(options.Duration.TimeSpan.Milliseconds);
 
                 obj.BeginAnimation(FrameworkElement.OpacityProperty, null);
 
-                /*if (opacity <= 0)
-                    obj.Visibility = Visibility.Collapsed;*/
-
-                return true;
+                obj.Opacity = opacity;
             }
-
-            return false;
         }
 
-        public static async Task<bool> Scale(object target, double fromX, double fromY,  double toX, double toY, int delay)
+        public static async Task Margin(object target, Thickness to, AnimationOptions options)
+        {
+            var obj = target as FrameworkElement;
+
+            if (obj != null)
+            {
+                obj.BeginAnimation(FrameworkElement.MarginProperty, new ThicknessAnimation
+                {
+                    To = to,
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
+                });
+
+                await Task.Delay(options.Duration.TimeSpan.Milliseconds);
+
+                obj.BeginAnimation(FrameworkElement.MarginProperty, null);
+
+                obj.Margin = to;
+            }
+        }
+
+        public static async Task Scale(object target, double x1, double y1, double x2, double y2, AnimationOptions options)
         {
             var obj = target as FrameworkElement;
 
@@ -109,30 +114,30 @@ namespace PicPrompt.Utils
 
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, new DoubleAnimation
                 {
-                    From = fromX,
-                    To = toX,
-                    Duration = TimeSpan.FromMilliseconds(delay),
+                    From = x1,
+                    To = x2,
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
                 });
 
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, new DoubleAnimation
                 {
-                    From = fromY,
-                    To = toY,
-                    Duration = TimeSpan.FromMilliseconds(delay),
+                    From = y1,
+                    To = y2,
+                    Duration = options.Duration,
+                    AccelerationRatio = options.AccelerationRatio,
+                    DecelerationRatio = options.DecelerationRatio
                 });
 
-                await Task.Delay(delay);
-
-                scaleTransform.ScaleX = toX;
-                scaleTransform.ScaleY = toY;
+                await Task.Delay(options.Duration.TimeSpan.Milliseconds);
 
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
 
-                return true;
+                scaleTransform.ScaleX = x2;
+                scaleTransform.ScaleY = y2;
             }
-
-            return false;
         }
     }
 }

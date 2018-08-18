@@ -21,7 +21,7 @@ namespace PicPrompt.Resources.Controls
 
             _background = new Rectangle
             {
-                Fill = new SolidColorBrush(Color.FromArgb(122, 0, 0, 0)),
+                Fill = new SolidColorBrush(Color.FromRgb(0, 0, 0)),
                 Opacity = 0
             };
 
@@ -55,8 +55,8 @@ namespace PicPrompt.Resources.Controls
             panel.Children.Add(_background);
             panel.Children.Add(this);
 
-            Utils.Animator.Opacity(_background, 1, 150);
-            Utils.Animator.Scale(this, 0.3, 0.3, 1, 1, 150);
+            Utils.Animator.Opacity(_background, 0.9, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
+            Utils.Animator.Scale(this, 0.3, 0.3, 1, 1, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
         }
 
         public void Hide()
@@ -66,8 +66,8 @@ namespace PicPrompt.Resources.Controls
 
             var panel = ((Panel)Parent);
 
-            Utils.Animator.Opacity(_background, 0, 150);
-            Utils.Animator.Scale(this, 1, 1, 0.3, 0.3, 150);
+            Utils.Animator.Opacity(_background, 0, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
+            Utils.Animator.Scale(this, 1, 1, 0.3, 0.3, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
 
             var timer = new DispatcherTimer
             {
