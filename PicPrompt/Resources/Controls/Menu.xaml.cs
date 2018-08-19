@@ -1,5 +1,6 @@
 ﻿using PicPrompt.Resources.Pages;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,22 +12,20 @@ namespace PicPrompt.Resources.Controls
 {
     public partial class Menu : UserControl
     {
+        public List<Page> Pages { get; private set; }
+
+        private int _currentPageIndex;
         private Rectangle _background;
-        private SettingsPage _settingsPage;
-        private AboutPage _aboutPage;
 
         public Menu()
         {
             InitializeComponent();
 
-            _background = new Rectangle
-            {
-                Fill = new SolidColorBrush(Color.FromRgb(0, 0, 0)),
-                Opacity = 0
-            };
+            Pages = new List<Page>();
+            Pages.Add(new SettingsPage());
+            Pages.Add(new AboutPage());
 
-            _settingsPage = new SettingsPage();
-            _aboutPage = new AboutPage();
+            _background = new Rectangle { Fill = Brushes.Black };
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -44,7 +43,7 @@ namespace PicPrompt.Resources.Controls
             ChangePage(1);
         }
 
-        public void Show(Panel panel)
+        public async void Show(Panel panel)
         {
             if (panel == null)
                 throw new ArgumentNullException();
@@ -55,36 +54,25 @@ namespace PicPrompt.Resources.Controls
             panel.Children.Add(_background);
             panel.Children.Add(this);
 
-            Utils.Animator.Opacity(_background, 0.9, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
-            Utils.Animator.Scale(this, 0.3, 0.3, 1, 1, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
+            Utils.Animator.Opacity(_background, 0.85, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150) });
+            await Utils.Animator.Scale(this, 0.3, 0.3, 1, 1, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
         }
 
-        public void Hide()
+        public async void Hide()
         {
             if (Parent == null)
                 return;
 
             var panel = ((Panel)Parent);
 
-            Utils.Animator.Opacity(_background, 0, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
-            Utils.Animator.Scale(this, 1, 1, 0.3, 0.3, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
+            Utils.Animator.Opacity(_background, 0, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150) });
+            await Utils.Animator.Scale(this, 1, 1, 0.3, 0.3, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
 
-            var timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(150)
-            };
-
-            timer.Tick += (_, __) =>
-            {
-                panel.Children.Remove(this);
-                panel.Children.Remove(_background);
-                timer.Stop();
-            };
-
-            timer.Start();
+            panel.Children.Remove(this);
+            panel.Children.Remove(_background);
         }
 
-        public void ChangePage(int index)
+        public async void ChangePage(int index)
         {
             foreach (UIElement child in ((Panel)Settings.Parent).Children)
             {
@@ -107,8 +95,6 @@ namespace PicPrompt.Resources.Controls
                         To = ((SolidColorBrush)Settings.PressBrush).Color,
                         Duration = TimeSpan.FromMilliseconds(0)
                     });
-
-                    Frame.Content = _settingsPage;
                     break;
                 case 1:
                     About.IsChecked = true;
@@ -118,10 +104,28 @@ namespace PicPrompt.Resources.Controls
                         To = ((SolidColorBrush)About.PressBrush).Color,
                         Duration = TimeSpan.FromMilliseconds(0)
                     });
-
-                    Frame.Content = _aboutPage;
                     break;
             }
+
+            if (_currentPageIndex < index)
+            {
+                await Utils.Animator.Margin(Frame, new Thickness(-500, 0, 0, 0), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
+                Frame.Content = Pages[index];
+                Frame.Margin = new Thickness(500, 0, 0, 0);
+                await Utils.Animator.Margin(Frame, new Thickness(0, 0, 0, 0), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
+            }
+            else if (_currentPageIndex > index)
+            {
+                await Utils.Animator.Margin(Frame, new Thickness(500, 0, 0, 0), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.6, DecelerationRatio = 0.1 });
+                Frame.Content = Pages[index];
+                Frame.Margin = new Thickness(-500, 0, 0, 0);
+                await Utils.Animator.Margin(Frame, new Thickness(0, 0, 0, 0), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(150), AccelerationRatio = 0.1, DecelerationRatio = 0.6 });
+            } else
+            {
+                Frame.Content = Pages[index];
+            }
+
+            _currentPageIndex = index;
         }
     }
 }
