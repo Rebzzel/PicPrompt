@@ -53,6 +53,35 @@
             <!--<Separator
                 Background="LightGray"
                 Margin="30,10"/>-->
+            <Label
+                Foreground="Gray"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Margin="0,5,0,0"
+                FontFamily="Segoe UI Semibold"
+                Content="Design &amp; Development"/>
+            <Label
+                Foreground="Gray"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Content="Rebzzel"/>
+            <Label
+                Foreground="Gray"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Margin="0,5,0,0"
+                FontFamily="Segoe UI Semibold"
+                Content="Packages"/>
+            <Label
+                Foreground="Gray"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Content="Magick.NET"/>
+            <Label
+                Foreground="Gray"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Content="LitJson"/>
         </StackPanel>
     </Grid>
 </Page>

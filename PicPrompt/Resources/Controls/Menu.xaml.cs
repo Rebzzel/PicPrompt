@@ -25,6 +25,7 @@ namespace PicPrompt.Resources.Controls
             Pages.Add(new SettingsPage());
             Pages.Add(new AboutPage());
 
+            _currentPageIndex = -1;
             _background = new Rectangle { Fill = Brushes.Black };
         }
 
@@ -70,10 +71,17 @@ namespace PicPrompt.Resources.Controls
 
             panel.Children.Remove(this);
             panel.Children.Remove(_background);
+
+            _currentPageIndex = -1;
         }
 
         public async void ChangePage(int index)
         {
+            if (_currentPageIndex < 0)
+            {
+                _currentPageIndex = index;
+            }
+
             foreach (UIElement child in ((Panel)Settings.Parent).Children)
             {
                 var button = child as ToggleButton;
