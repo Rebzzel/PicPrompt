@@ -87,9 +87,11 @@
                 </Grid>
                 <ScrollViewer
                     Grid.Row="1"
-                    Margin="1,1,1,8">
+                    Margin="0,1,0,8" 
+                    VerticalScrollBarVisibility="Auto">
                     <Frame 
                         x:Name="Frame" 
+                        Width="360"
                         NavigationUIVisibility="Hidden"/>
                 </ScrollViewer>
             </Grid>
