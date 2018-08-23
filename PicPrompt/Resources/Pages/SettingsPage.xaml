@@ -22,17 +22,22 @@
             FontSize="16" 
             Content="General"/>
         <!--<Separator Margin="-30, 5"/>-->
-        <CheckBox 
+        <CheckBox x:Name="StartWithWindows" 
             BorderBrush="Gray"
             Margin="0,5"
             Padding="-5,0,0,0"
-            BorderThickness="2" 
-            IsEnabled="False">
-            <Label
-                Margin="5,0,0,0"
-                FontFamily="Segoe UI Semibold"
-                FontSize="13"
-                Content="Start with Windows"/>
+            BorderThickness="2" Click="StartWithWindows_Click" Background="#FF252525">
+            <StackPanel>
+                <Label
+                    Margin="5,0,0,0"
+                    FontFamily="Segoe UI Semibold"
+                    FontSize="13"
+                    Content="Start with Windows"/>
+                <Label
+                    Foreground="Gray"
+                    Margin="5,-10,0,0"
+                    Content="First opening will be fast"/>
+            </StackPanel>
         </CheckBox>
         <CheckBox
             x:Name="BackgroundWork"
@@ -51,7 +56,7 @@
                 <Label
                     Foreground="Gray"
                     Margin="5,-10,0,0"
-                    Content="This allows to open the image faster"/>
+                    Content="Allows to open the image faster"/>
             </StackPanel>
         </CheckBox>
         <Label

@@ -84,7 +84,16 @@ namespace PicPrompt
 
             if (!File.Exists(filePath))
             {
-                File.WriteAllText(filePath, "{\"allow-background-work\":true}");
+                var writer = new LitJson.JsonWriter();
+
+                writer.WriteObjectStart();
+                writer.WritePropertyName("start-with-windows-enabled");
+                writer.Write(false);
+                writer.WritePropertyName("allow-background-work");
+                writer.Write(true);
+                writer.WriteObjectEnd();
+
+                File.WriteAllText(filePath, writer.ToString());
             }
 
             Config = new Utils.Configuration(filePath);
