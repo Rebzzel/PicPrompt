@@ -153,6 +153,8 @@ namespace PicPrompt
             _imageIsEdited = false;
 
             ViewerGrid.Reset();
+            Viewer.Width = _image.Width > Width ? Width : _image.Width;
+            Viewer.Height = _image.Height > Height ? Height : _image.Height;
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
