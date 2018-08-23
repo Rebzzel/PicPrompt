@@ -63,7 +63,7 @@
                             Click="Settings_Click">
                             <Path
                                 Fill="#FF252525"
-                                Width="14" Height="14"
+                                Width="12" Height="12"
                                 Data="{StaticResource IconSettings}"
                                 Stretch="Fill"/>
                         </c:ToggleButton>
