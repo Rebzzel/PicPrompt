@@ -8,39 +8,34 @@ namespace PicPrompt
 {
     public partial class App : Application, ISingleInstanceApp
     {
-        public static Utils.Configuration Config;
-
-        private Window _backgroundWindow;
+        public static Utils.Configuration Config = new Utils.Configuration();
 
         [STAThread]
         public static void Main()
         {
             if (SingleInstance<App>.InitializeAsFirstInstance("PicPrompt"))
             {
-                var splitPath = SingleInstance<App>.CommandLineArgs[0].Split('\\');
-
-                string dirPath = splitPath[0];
-                for (int i = 1; i < splitPath.Length - 1; i++)
-                {
-                    dirPath += $@"\{splitPath[i]}";
-                }
+                var args = SingleInstance<App>.CommandLineArgs;
 
                 var app = new App();
                 app.InitializeComponent();
-                app.InitializeConfig(dirPath);
-                app._backgroundWindow = new Window();
+                app.InitiliazeConfig(Path.GetDirectoryName(args[0]));
 
+                var backgroundWindow = new Window();
                 var mainWindow = new MainWindow();
 
                 mainWindow.Closed += (_, __) =>
                 {
-                    if (!(bool)Config["allow-background-work"])
-                        app._backgroundWindow.Close();
+                    if ((bool)Config["allow-background-work"] == false)
+                    {
+                        backgroundWindow.Close();
+                    }
                 };
 
-                var args = SingleInstance<App>.CommandLineArgs;
                 if (args.Count > 1)
+                {
                     mainWindow.OpenImage(args[1]);
+                }
 
                 app.Run(mainWindow);
 
@@ -50,15 +45,7 @@ namespace PicPrompt
 
         public bool SignalExternalCommandLineArgs(IList<string> args)
         {
-            var splitPath = args[0].Split('\\');
-
-            string dirPath = splitPath[0];
-            for (int i = 1; i < splitPath.Length - 1; i++)
-            {
-                dirPath += $@"\{splitPath[i]}";
-            }
-
-            InitializeConfig(dirPath);
+            InitiliazeConfig(Path.GetDirectoryName(args[0]));
 
             var mainWindow = MainWindow as MainWindow;
 
@@ -73,12 +60,14 @@ namespace PicPrompt
             }
 
             if (args.Count > 1)
+            {
                 mainWindow.OpenImage(args[1]);
+            }
 
             return true;
         }
 
-        public void InitializeConfig(string path)
+        public void InitiliazeConfig(string path)
         {
             var filePath = $"{path}\\PicPrompt.json";
 
@@ -96,7 +85,7 @@ namespace PicPrompt
                 File.WriteAllText(filePath, writer.ToString());
             }
 
-            Config = new Utils.Configuration(filePath);
+            Config.Load(filePath);
         }
     }
 }
