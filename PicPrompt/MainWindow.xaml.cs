@@ -1,10 +1,12 @@
 ﻿using ImageMagick;
 using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace PicPrompt
 {
@@ -85,6 +87,24 @@ namespace PicPrompt
 
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.D)
                 RotateRight_Click(null, null);
+
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.V)
+            {
+                if (Clipboard.ContainsFileDropList() == true)
+                {
+                    var filePath = ((string[])Clipboard.GetData(DataFormats.FileDrop))[0];
+                    OpenImage(filePath);
+                } else if (Clipboard.ContainsImage() == true)
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        var encoder = new BmpBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(Clipboard.GetImage()));
+                        encoder.Save(stream);
+                        OpenImage(new System.Drawing.Bitmap(stream));
+                    }
+                }
+            }
         }
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -185,6 +205,52 @@ namespace PicPrompt
             }
 
             _image = new MagickImage(path);
+
+            NoneContentGrid.Visibility = Visibility.Collapsed;
+
+            foreach (FrameworkElement item in ((StackPanel)TitleBar.Children[0]).Children)
+            {
+                if (item.Name == "Separator4" || item.Name == "ScaleLbl")
+                    continue;
+
+                item.Visibility = Visibility.Visible;
+            }
+
+            NameLbl.Content = _image.FileName.Split('\\')[Regex.Matches(_image.FileName, @"\\").Count];
+            SizeLbl.Content = $"{_image.Width} x {_image.Height}";
+
+            foreach (FrameworkElement item in MainMenu.Items)
+            {
+                if ((item as MenuItem) != null)
+                    item.IsEnabled = true;
+            }
+
+            Viewer.Source = _image.ToBitmapSource();
+            Viewer.Width = _image.Width > Width ? Width : _image.Width;
+            Viewer.Height = _image.Height > Height ? Height : _image.Height;
+
+            if (Toolbar.Visibility == Visibility.Collapsed)
+            {
+                Toolbar.Margin = new Thickness(0, 0, 0, 0);
+                Toolbar.Opacity = 0;
+                Toolbar.Visibility = Visibility.Visible;
+
+                Utils.Animator.Margin(Toolbar, new Thickness(0, 0, 0, 30), new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(500), AccelerationRatio = 0.25, DecelerationRatio = 0.75 });
+                Utils.Animator.Opacity(Toolbar, 1, new Utils.Animator.AnimationOptions { Duration = TimeSpan.FromMilliseconds(1000), AccelerationRatio = 0.25, DecelerationRatio = 0.75 });
+            }
+        }
+
+        public void OpenImage(System.Drawing.Bitmap bitmap)
+        {
+            ViewerGrid.Reset();
+
+            if (_image != null)
+            {
+                _image.Dispose();
+                _image = null;
+            }
+
+            _image = new MagickImage(bitmap);
 
             NoneContentGrid.Visibility = Visibility.Collapsed;
 
