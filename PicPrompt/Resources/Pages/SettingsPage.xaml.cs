@@ -57,7 +57,10 @@ namespace PicPrompt.Resources.Pages
         {
             var key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-            key.SetValue("PicPrompt", false);
+            if (key.GetValue("PicPrompt") != null)
+            {
+                key.DeleteValue("PicPrompt");
+            }
         }
     }
 }
